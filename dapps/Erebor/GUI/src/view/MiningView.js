@@ -29,10 +29,10 @@ class MiningView extends Reflux.Component {
 		this.props.updateView(view);
 	}
 
-	handleClickMining  = () => {
-		if(this.state.mining){
+	handleClickMining = () => {
+		if (this.state.mining) {
 			EreborActions.stopMining();
-		}else{
+		} else {
 			EreborActions.startMining();
 		}
 	}
@@ -49,19 +49,13 @@ class MiningView extends Reflux.Component {
 
 	__renderMiningSettings = () => {
 		return <div>
-			<div className="headerbarButton" style={{ color: this.props.currentView === 'AppLauncher' ? '#ff4200' : 'white' }}
-				onClick={this.updateView.bind(this, 'AppLauncher')}>Gamer</div>
-			<div className="headerbarButton" style={{ color: this.props.currentView === 'TokenSettings' ? '#ff4200' : 'white' }}
-				onClick={this.updateView.bind(this, 'TokenSettings')}>Defender</div>
-			<div className="headerbarButton" style={{ color: this.props.currentView === 'Receipts' ? '#ff4200' : 'white' }}
-				onClick={this.updateView.bind(this, 'Receipts')}>Validator</div>
 			{this.__renderMiningRole(this.state.miningRole)}
 		</div>;
 	}
 
 	__renderMiningRole = (role) => {
-		return role === "Gamer" ? <div className="gamerSetting">
-			<label className="item TransferTo" style = {{border:'none'}}>
+		return <div className="gamerSetting">
+			<label className="item TransferTo" style={{ border: 'none' }}>
 				Addr:
 		<input size={30} type='text' style=
 					{{
@@ -72,13 +66,13 @@ class MiningView extends Reflux.Component {
 						fontSize: "24px",
 						fontFamily: "monospace",
 						textAlign: "center"
-					}} 
+					}}
 					value={this.state.recipient} placeholder="Ethereum Address" />
 
 			</label>
-			<input type="button" className="button" style={{margin: "40px 0 0 40px", fontSize: "22px"}}
-			 value={this.state.mining? "stop":"start"} onClick={this.handleClickMining} />
-		</div> : <div></div>
+			<input type="button" className="button" style={{ margin: "40px 0 0 40px", fontSize: "22px" }}
+				value={this.state.mining ? "stop" : "start"} onClick={this.handleClickMining} />
+		</div>
 	}
 
 	render() {
@@ -90,11 +84,8 @@ class MiningView extends Reflux.Component {
 				</div>
 				<div className="miningSettings">
 					{this.__renderMiningSettings()}
+
 				</div>
-				<div>
-				<button onClick={this.notify}>Notify !</button>
-				<ToastContainer />
-			</div>
 			</div>
 
 

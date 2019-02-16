@@ -69,30 +69,12 @@ class MiningView extends _reflux2.default.Component {
 			return _react2.default.createElement(
 				'div',
 				null,
-				_react2.default.createElement(
-					'div',
-					{ className: 'headerbarButton', style: { color: this.props.currentView === 'AppLauncher' ? '#ff4200' : 'white' },
-						onClick: this.updateView.bind(this, 'AppLauncher') },
-					'Gamer'
-				),
-				_react2.default.createElement(
-					'div',
-					{ className: 'headerbarButton', style: { color: this.props.currentView === 'TokenSettings' ? '#ff4200' : 'white' },
-						onClick: this.updateView.bind(this, 'TokenSettings') },
-					'Defender'
-				),
-				_react2.default.createElement(
-					'div',
-					{ className: 'headerbarButton', style: { color: this.props.currentView === 'Receipts' ? '#ff4200' : 'white' },
-						onClick: this.updateView.bind(this, 'Receipts') },
-					'Validator'
-				),
 				this.__renderMiningRole(this.state.miningRole)
 			);
 		};
 
 		this.__renderMiningRole = role => {
-			return role === "Gamer" ? _react2.default.createElement(
+			return _react2.default.createElement(
 				'div',
 				{ className: 'gamerSetting' },
 				_react2.default.createElement(
@@ -112,7 +94,7 @@ class MiningView extends _reflux2.default.Component {
 				),
 				_react2.default.createElement('input', { type: 'button', className: 'button', style: { margin: "40px 0 0 40px", fontSize: "22px" },
 					value: this.state.mining ? "stop" : "start", onClick: this.handleClickMining })
-			) : _react2.default.createElement('div', null);
+			);
 		};
 
 		this.store = _EreborStore2.default;
@@ -145,8 +127,7 @@ class MiningView extends _reflux2.default.Component {
 					'button',
 					{ onClick: this.notify },
 					'Notify !'
-				),
-				_react2.default.createElement(_reactToastify.ToastContainer, null)
+				)
 			)
 		);
 	}
