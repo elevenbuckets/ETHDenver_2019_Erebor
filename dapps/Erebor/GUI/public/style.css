@@ -180,6 +180,28 @@ h6 {
   max-height: 60vh;
 }
 
+.chest {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 2fr 1fr;
+  grid-template-areas:
+	"chestView"
+        "stoneTransfer";
+  color: white;
+  font-size: 20pt
+}
+.chestView {
+  grid-area: chestView;
+  display: grid;
+  grid-template-columns: 400px;
+  grid-gaps: 20px;
+  overflow-x: scroll;
+  overflow-y: hidden;
+}
+.stoneTransfer {
+  grid-area: stoneTransfer;
+}
+
 /* Each item in our grid will contain numbers */
 .item {
   /* We center the contents of these items. You can also do this with flexbox too! */
