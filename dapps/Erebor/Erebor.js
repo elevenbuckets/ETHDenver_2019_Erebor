@@ -216,7 +216,7 @@ class Erebor extends BladeIronClient {
 					if (!this.gameStarted && this.defenderActions.fortify === false) {
 						console.log('Welcome, Defender!!! Please start new game!');
 						let board = ethUtils.bufferToHex(ethUtils.sha256(String(Math.random()) + 'ElevenBuckets'));
-					        if (this.sendTickets > 5) this.sendTickets = 5;
+                                                if (this.sendTickets > 5) this.sendTickets = 5;
                                                 if (this.sendTickets > 0 && this.sendTickets <= 5){  // cannot send more than 3 tickets
                                                         board = '0x' + '0'.repeat(this.sendTickets) + board.slice(2+this.sendTickets);
                                                 }
@@ -541,7 +541,7 @@ class Erebor extends BladeIronClient {
 
 		this.startTrial = (tryMore = 1183) => 
 		{
-			this.ipfsId().then((obj) => 
+			return this.ipfsId().then((obj) => 
 			{  
 				console.log(`IPFS Address: ${obj.id}, Agent: ${obj.agentVersion}, Protocol: ${obj.protocolVersion}`);
 
@@ -946,17 +946,21 @@ class Erebor extends BladeIronClient {
 	            return this.call('Elemmire')('tokenURI')(tokenId);
 	        };
 	
-	        this.myTokens = () => {
+                this.myTokens = () => {
 	            return this.call('Elemmire')('balanceOf')(this.userWallet).then( (balance) => {
 	                let p = [...Array(parseInt(balance))].map((item, index) => {
 	                    return this.call('Elemmire')('tokenOfOwnerByIndex')(this.userWallet, index)
 	                });
-	                return Promise.all(p);
+                        return Promise.all(p).then((plist) => {
+                            let q = [...plist].map((item1) => {
+                                return this.call('Elemmire')('tokenURI')(item1)
+                            });
+                            return Promise.all(q);
+                        });
 	            })
 	        };
 
                 // membership related
-                
                 this.myMemberStatus = () => {  // "status", "token (hex)", "since", "penalty"
                         return this.call('MemberShip')('getMemberInfo')(this.userWallet).then( (res) => {
                                 let status = res[0];

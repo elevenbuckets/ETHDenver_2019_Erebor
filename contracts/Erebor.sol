@@ -36,7 +36,7 @@ contract Erebor{
 	uint constant public maxPlayer = 1000;
 	uint constant public period_all = 20;  // 7 + 3 + 10
 	uint public initHeight;
-	bytes32 public difficulty = 0x0000ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff;
+	bytes32 public difficulty = 0x0000000fffffffffffffffffffffffffffffffffffffffffffffffffffffffff;
 	uint public fee = 10000000000000000;
 	bool public setup = false;
 	uint public playercount = 0;
