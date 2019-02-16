@@ -13,7 +13,7 @@ import EreborActions from '../action/EreborActions';
 
 // Views
 
-class HeaderBarView extends Reflux.Component {
+class MiningView extends Reflux.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -84,5 +84,5 @@ class HeaderBarView extends Reflux.Component {
 	}
 }
 
-export default HeaderBarView;
+export default MiningView;
 
