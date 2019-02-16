@@ -17,18 +17,15 @@ import EreborActions from '../action/EreborActions';
 // Views
 import HeaderBarView from './HeaderBarView';
 import MiningView from './MiningView';
+import MemberShipView from './MemberShipView';
 
 
 class MainView extends Reflux.Component {
 	constructor(props) {
 		super(props);
 		this.store = EreborStore;
-		// this.controlPanel = remote.getGlobal("controlPanel");
-		// this.controlPanel.client.subscribe('newJobs');
-		// this.controlPanel.client.on('newJobs', this.handleNewJobs);
-		// this.controlPanel.syncTokenInfo();
 		this.state = {
-			currentView: "AppLauncher"
+			currentView: "Mining"
 		}
 
 		this.storeKeys = [
@@ -52,28 +49,27 @@ class MainView extends Reflux.Component {
 	}
 
 	updateStateForEvent = (key, e) => {
-        this.setState({ [key]: e.target.value });
-    }
+		this.setState({ [key]: e.target.value });
+	}
 
 	passAccRef = () => {
 		return ReactDOM.findDOMNode(this.refs.Accounts).firstChild;
 	}
 
 
-
-
 	render() {
 		console.log("In MainView render(); syncInProgress = " + this.state.syncInProgress);
 
-			return (
-				<div className="wrapper">
-					<HeaderBarView currentView={this.state.currentView} updateView={this.updateState.bind(this, "currentView")} />
-					<div className="content">
-						<MiningView/>
-					</div>
+		return (
+			<div className="wrapper">
+				<HeaderBarView currentView={this.state.currentView} updateView={this.updateState.bind(this, "currentView")} />
+				<div className="content">
+					{this.state.currentView === "Mining" ? <MiningView /> : this.state.currentView === "MemberShip" ? <MembershipView /> :
+						<ChestView />}
 				</div>
-			)
-		
+			</div>
+		)
+
 	}
 }
 

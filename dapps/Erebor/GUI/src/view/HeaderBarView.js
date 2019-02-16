@@ -32,12 +32,12 @@ class HeaderBarView extends Reflux.Component {
 		return (
             <div className="headerbar">
 			
-			<div className="headerbarButton" style={{color: this.props.currentView === 'AppLauncher' ? '#ff4200' : 'white'}}
-			   onClick={this.updateView.bind(this, 'AppLauncher')}>Mining</div>
-			<div className="headerbarButton" style={{color: this.props.currentView === 'TokenSettings' ? '#ff4200' : 'white'}}
-			   onClick={this.updateView.bind(this, 'TokenSettings')}>MemberShip</div>
-            		<div className="headerbarButton" style={{color: this.props.currentView === 'Receipts' ? '#ff4200' : 'white'}} 
-			   onClick={this.updateView.bind(this, 'Receipts')}>Box</div>
+			<div className="headerbarButton" style={{color: this.props.currentView === 'Mining' ? '#ff4200' : 'white'}}
+			   onClick={this.updateView.bind(this, 'Mining')}>Mining</div>
+			<div className="headerbarButton" style={{color: this.props.currentView === 'MemberShip' ? '#ff4200' : 'white'}}
+			   onClick={this.updateView.bind(this, 'MemberShip')}>MemberShip</div>
+            		<div className="headerbarButton" style={{color: this.props.currentView === 'Chest' ? '#ff4200' : 'white'}} 
+			   onClick={this.updateView.bind(this, 'Chest')}>Chest</div>
 
 			   <div className="headerLogo" style={{width: '6vh',float: 'left'}}>
 				<img src="assets/icon/erebor.png" style={{width: '6vh',float: 'left'}} />
