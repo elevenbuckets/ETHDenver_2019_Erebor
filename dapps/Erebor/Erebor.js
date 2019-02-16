@@ -254,6 +254,7 @@ class Erebor extends BladeIronClient {
 					this.stopTrial();
 				}
 			})
+			.catch((err) => { console.log(`Error in defenderBot:`); console.trace(err); }) 
 		}
 
 		this.calcTickets = (stats) => 
