@@ -33,6 +33,9 @@ class EreborStore extends Reflux.Store {
 
 		//Overwrite the function with pass the state
 		this.erebor.reactStateTrigger = (state) =>{
+			if(state.stateMsg){
+				this.setState({currentMiningMessages : [...this.state.currentMiningMessages, stage.stateMsg]});
+			}
 			this.setState(state);
 		}
 
@@ -168,10 +171,12 @@ class EreborStore extends Reflux.Store {
 	}
 
 	onStartMining = () =>{
+		this.erebor.startTrial(200);
 		this.setState({mining: true});
 	}
 
 	onStopMining = () =>{
+		this.erebor.stopTrial();
 		this.setState({mining: false});
 	}
 }
