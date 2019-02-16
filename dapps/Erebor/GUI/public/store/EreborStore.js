@@ -102,16 +102,6 @@ class EreborStore extends _reflux2.default.Store {
 				this.setState(_extends({}, stats, { wait4peers: false, syncInProgress: false }));
 			}
 
-			this.erebor.allAccounts().then(addrs => {
-				if (addrs.length !== this.state.accounts.length) this.setState({ accounts: addrs });
-
-				if (this.state.address !== null) {
-					return this.addressUpdate();
-				} else {
-					this.setState({ balances: { 'ETH': 0 }, selected_token_name: '' });
-				}
-			});
-
 			this.erebor.gasPriceEst().then(est => {
 				this.setState({ gasPriceInfo: est, gasPrice: est[this.state.gasPriceOption] });
 			});

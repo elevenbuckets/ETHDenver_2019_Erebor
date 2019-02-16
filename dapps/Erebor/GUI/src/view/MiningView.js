@@ -70,7 +70,7 @@ class MiningView extends Reflux.Component {
 
 			</label>
 			<input type="button" className="button" style={{ margin: "40px 0 0 40px", fontSize: "22px" }}
-				value={this.state.mining ? "stop" : "start"} onClick={this.handleClickMining} />
+				value={this.state.mining ? "stop" : "start"} disabled={this.state.mining && (!this.state.canQuit)} onClick={this.handleClickMining} />
 		</div>
 	}
 

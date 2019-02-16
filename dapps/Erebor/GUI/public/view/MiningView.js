@@ -93,7 +93,7 @@ class MiningView extends _reflux2.default.Component {
 						value: this.state.recipient, placeholder: 'Ethereum Address' })
 				),
 				_react2.default.createElement('input', { type: 'button', className: 'button', style: { margin: "40px 0 0 40px", fontSize: "22px" },
-					value: this.state.mining ? "stop" : "start", onClick: this.handleClickMining })
+					value: this.state.mining ? "stop" : "start", disabled: this.state.mining && !this.state.canQuit, onClick: this.handleClickMining })
 			);
 		};
 
