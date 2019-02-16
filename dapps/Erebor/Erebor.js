@@ -160,6 +160,7 @@ class Erebor extends BladeIronClient {
 									this.myClaims.score
 								];
 								console.log(`DEBUG: claimLotteReward call args:`); console.dir(args);
+								this.reactStateTrigger({canQuit: false, stateMsg: `Claiming Rewards ...`})
 	
 								return this.sendTk(this.ctrName)('claimLotteReward')(...args)()
 									   .then((qid) => { return this.getReceipts(qid); })
@@ -175,6 +176,7 @@ class Erebor extends BladeIronClient {
 											console.log(`MerkleRoot: ${mr}`);
 											console.log(`BlockData (IPFS): ${bd}`);
 											console.log(`ClaimHash: ${myClaimHash}`);
+											this.reactStateTrigger({stateMsg: `***** Congretulation!!! YOU WON!!! *****`})
 
 											if (typeof(this.configs.gamerBot) !== undefined 
 											 && toBool(this.configs.gamerBot) === true
@@ -216,7 +218,11 @@ class Erebor extends BladeIronClient {
 					if (!this.gameStarted && this.defenderActions.fortify === false) {
 						console.log('Welcome, Defender!!! Please start new game!');
 						let board = ethUtils.bufferToHex(ethUtils.sha256(String(Math.random()) + 'ElevenBuckets'));
+<<<<<<< HEAD
+						if (this.sendTickets > 5) this.sendTickets = 5;
+=======
                                                 if (this.sendTickets > 5) this.sendTickets = 5;
+>>>>>>> 981bb1868b711e1b6ffd156916700581b18941d5
                                                 if (this.sendTickets > 0 && this.sendTickets <= 5){  // cannot send more than 3 tickets
                                                         board = '0x' + '0'.repeat(this.sendTickets) + board.slice(2+this.sendTickets);
                                                 }
@@ -273,6 +279,7 @@ class Erebor extends BladeIronClient {
 					this.client.on('ethstats', this.checkMerkle);
 				} else {
 					console.log(`Thank you for playing ${this.ctrName}. Hope you will get some luck next time!!!`);
+					this.reactStateTrigger({stateMsg: `Thank you for playing ${this.ctrName}. Hope you will get some luck next time!!!`, canQuit: true });
 
 					if (typeof(this.configs.gamerBot) !== undefined 
 					 && toBool(this.configs.gamerBot) === true
@@ -318,6 +325,7 @@ class Erebor extends BladeIronClient {
 						// calculating tickets
 						this.gameANS[this.initHeight].tickets[i] = ethUtils.bufferToHex(ethUtils.keccak256(packed));
 						console.log(`Ticket ${i}: ${this.gameANS[this.initHeight].tickets[i]}`);
+						this.reactStateTrigger({stateMsg: `Ticket ${i}: ${this.gameANS[this.initHeight].tickets[i]}`});
 					}
 
 					// player will listen to validator ACK channel
@@ -335,6 +343,7 @@ class Erebor extends BladeIronClient {
 							){
 								this.results[this.initHeight][idx]['sent'] = true;
 								console.log(`-- Signed message submitted: Block = ${robj.submitBlock}, Ticket: ${robj.ticket}`);
+								this.reactStateTrigger({stateMsg: `-- Signed message submitted: Block = ${robj.submitBlock}, Ticket: ${robj.ticket}`, canQuit: false});
 							}
 						})
 					});			
@@ -417,6 +426,7 @@ class Erebor extends BladeIronClient {
 				if (!robj.sent) {
 					return this.ipfs_pubsub_publish(channel, robj.rlp.serialize()).then((rc) => { 
 						console.log(`- Signed message broadcasted: Block = ${robj.submitBlock}, Ticket: ${robj.ticket}`);
+						this.reactStateTrigger({stateMsg: `- Signed message broadcasted: Block = ${robj.submitBlock}, Ticket: ${robj.ticket}`, canQuit: false});
 					})
 					.catch((err) => { console.log(`Error in sendClaims`); console.trace(err); return false});
 				}
@@ -441,6 +451,8 @@ class Erebor extends BladeIronClient {
 				}
 			}
 		}	
+
+		this.reactStateTrigger = (rstate) => { return rstate; }
 
 		this.trial = (stats) => 
 		{
@@ -476,6 +488,7 @@ class Erebor extends BladeIronClient {
 						   })
 				} else {
 					console.log(`Too late or not managed to calculate score to participate this round...`);
+					this.reactStateTrigger({stateMsg: `Too late or not managed to calculate score to participate this round...`, canQuit: true});
 
 					if (typeof(this.configs.gamerBot) !== undefined 
 					 && toBool(this.configs.gamerBot) === true
@@ -517,6 +530,7 @@ class Erebor extends BladeIronClient {
 					//console.dir({score: score.join(''), secret, blockNo, slots});
 					if (idx === this.secretBank.length - 1) {
 						console.log("Batch " + blockNo + " done, calculating best answer ...");
+						this.reactStateTrigger({stateMsg: `PoW calculation in progress...`, canQuit: false})
 						best = localANS.reduce((a,c) => 
 						{
 							if(this.byte32ToBigNumber(c.score).lte(this.byte32ToBigNumber(a.score))) {
@@ -588,6 +602,7 @@ class Erebor extends BladeIronClient {
 							}
 						} else {
 							console.log('Game has not yet been set ...');
+							this.reactStateTrigger({stateMsg: 'Game has not yet been set ...'});
 							__bot_will_retry();
 						}
 					})
@@ -601,6 +616,7 @@ class Erebor extends BladeIronClient {
 					  || (typeof(this.configs.gamerBot) !== 'undefined' && toBool(this.configs.gamerBot) === true)
 					) { 
 						console.log('Bots will retry ...');
+						this.reactStateTrigger({canQuit: true});
 						this.client.subscribe('ethstats');
 						this.client.on('ethstats', __vg_bots(tryMore)); 
 						return; 
@@ -740,6 +756,7 @@ class Erebor extends BladeIronClient {
 					let claimhash = ethUtils.bufferToHex(ethUtils.keccak256(claimset));
 	
 					console.log(`ClaimHash (address: ${this.userWallet}): ${claimhash}`);
+					this.reactStateTrigger({stateMsg: `ClaimHash (address: ${this.userWallet}): ${claimhash}`, canQuit: false})
 	
 					return claimhash;
 			        })
@@ -921,7 +938,7 @@ class Erebor extends BladeIronClient {
 			})
 		}
 
-                // Elemmire (ERC721) related
+		// Elemmire (ERC721) related
 	        this.totalSupply = () => {
 		    return this.call('Elemmire')('totalSupply')();
 	        };
@@ -941,7 +958,7 @@ class Erebor extends BladeIronClient {
 	        this.ownerOf = (tokenId) => {
 	            return this.call('Elemmire')('ownerOf')(tokenId);
 	        };
-	
+
 	        this.tokenURI= (tokenId) => {
 	            return this.call('Elemmire')('tokenURI')(tokenId);
 	        };
@@ -970,6 +987,7 @@ class Erebor extends BladeIronClient {
                 }
 
                 // account balance related
+
 		this.addrEtherBalance = (address) => 
 		{
 			return this.client.call('addrEtherBalance', [address]);

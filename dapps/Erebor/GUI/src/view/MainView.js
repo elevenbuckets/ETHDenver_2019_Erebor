@@ -73,7 +73,9 @@ class MainView extends Reflux.Component {
 					{this.state.currentView === "Mining" ? <MiningView /> : this.state.currentView === "MemberShip" ? <MemberShipView /> :
 						<ChestView />}
 				</div>
+				<ToastContainer />
 			</div>
+			
 		)
 
 	}
