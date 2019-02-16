@@ -37,9 +37,6 @@ class EreborStore extends _reflux2.default.Store {
 		};
 
 		this.state = {
-			tokenBalance: [],
-			passManaged: {},
-			accounts: [],
 			lesDelay: false,
 			blockHeight: null,
 			blockTime: null,
@@ -47,14 +44,12 @@ class EreborStore extends _reflux2.default.Store {
 			address: null,
 			selected_token_name: '',
 			balances: { 'ETH': 0 },
-			gasPriceOption: "high",
-			customGasPrice: null,
-			gasPriceInfo: null,
-			tokenList: [],
-			showingBlock: 0,
 			connected: true,
 			wait4peers: true,
 			syncInProgress: false,
+			canQuit: true,
+			stateMsg: null,
+			result: null,
 			currentMiningMessages: ["Currently mining, the expected mined time is 10 min,", "Keep going"],
 			mining: false
 		};
@@ -64,7 +59,9 @@ class EreborStore extends _reflux2.default.Store {
 		this.erebor.client.subscribe('ethstats');
 
 		//Overwrite the function with pass the state
-		this.erebor.reactStateTrigger = state => {};
+		this.erebor.reactStateTrigger = state => {
+			this.setState(state);
+		};
 
 		this.addressUpdate = () => {
 			if (this.state.lesDelay === true || this.state.address === null) return; // do nothing, since statusUpdate is doing it already
