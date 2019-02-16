@@ -31,7 +31,7 @@ contract MemberShip {
         owner = msg.sender;
         coreManager = [0xB440ea2780614b3c6a00e512f432785E7dfAFA3E,
                         0x4AD56641C569C91C64C28a904cda50AE5326Da41,
-                        0x362ea687b8a372a0235466a097e578d55491d37f];
+                        0xaF7400787c54422Be8B44154B1273661f1259CcD];
         ELEMAddr = _ELEMAddr;
         // RNTAddr  = _RNTAddr;
         // allocate membership in migration file
