@@ -41,7 +41,19 @@ class MiningView extends _reflux2.default.Component {
 			this.props.updateView(view);
 		};
 
-		this.notify = () => (0, _reactToastify.toast)("Wow so easy !");
+		this.handleClickMining = () => {
+			if (this.state.mining) {
+				_EreborActions2.default.stopMining();
+			} else {
+				_EreborActions2.default.startMining();
+			}
+		};
+
+		this.notify = () => (0, _reactToastify.toast)(_react2.default.createElement(
+			'div',
+			null,
+			'Congratulation! Just mined a token successfully'
+		));
 
 		this.__renderMiningMessages = () => {
 			return this.state.currentMiningMessages.map(message => {
@@ -98,14 +110,17 @@ class MiningView extends _reflux2.default.Component {
 						},
 						value: this.state.recipient, placeholder: 'Ethereum Address' })
 				),
-				_react2.default.createElement('input', { type: 'button', className: 'button', style: { margin: "40px 0 0 40px", fontSize: "22px" }, value: 'start', onClick: this.handleSend })
+				_react2.default.createElement('input', { type: 'button', className: 'button', style: { margin: "40px 0 0 40px", fontSize: "22px" },
+					value: this.state.mining ? "stop" : "start", onClick: this.handleClickMining })
 			) : _react2.default.createElement('div', null);
 		};
 
+		this.store = _EreborStore2.default;
 		this.state = {
 			currentMiningMessages: ["Currently mining, the expected mined time is 10 min,", "Keep going"],
 			miningRole: "Gamer"
 		};
+		this.storeKeys = ["mining"];
 	}
 
 	render() {

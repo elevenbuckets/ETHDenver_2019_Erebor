@@ -17,17 +17,27 @@ import EreborActions from '../action/EreborActions';
 class MiningView extends Reflux.Component {
 	constructor(props) {
 		super(props);
+		this.store = EreborStore;
 		this.state = {
 			currentMiningMessages: ["Currently mining, the expected mined time is 10 min,", "Keep going"],
 			miningRole: "Gamer"
 		}
+		this.storeKeys = ["mining"];
 	}
 
 	updateView = (view) => {
 		this.props.updateView(view);
 	}
 
-	notify = () => toast("Wow so easy !");
+	handleClickMining  = () => {
+		if(this.state.mining){
+			EreborActions.stopMining();
+		}else{
+			EreborActions.startMining();
+		}
+	}
+
+	notify = () => toast(<div>Congratulation! Just mined a token successfully</div>);
 
 	__renderMiningMessages = () => {
 		return this.state.currentMiningMessages.map(message => {
@@ -66,7 +76,8 @@ class MiningView extends Reflux.Component {
 					value={this.state.recipient} placeholder="Ethereum Address" />
 
 			</label>
-			<input type="button" className="button" style={{margin: "40px 0 0 40px", fontSize: "22px"}} value="start" onClick={this.handleSend} />
+			<input type="button" className="button" style={{margin: "40px 0 0 40px", fontSize: "22px"}}
+			 value={this.state.mining? "stop":"start"} onClick={this.handleClickMining} />
 		</div> : <div></div>
 	}
 

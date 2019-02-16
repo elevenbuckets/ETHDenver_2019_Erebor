@@ -28,7 +28,8 @@ class EreborStore extends Reflux.Store {
 				showingBlock: 0,
 				connected: true,
 				wait4peers: true,
-				syncInProgress: false
+				syncInProgress: false,
+				mining: false
 			}
 
 		this.listenables = EreborActions;
@@ -181,30 +182,12 @@ class EreborStore extends Reflux.Store {
 		this.setState({ selected_token_name: value });
 	}
 
-	onSend(fromAddr, addr, type, amount) {
-		if (fromAddr !== this.erebor.userErebor) {
-			console.log("no password"); return;
-		}
-		let weiAmount = type === 'ETH' ? this.erebor.toWei(amount, 18).toString() : this.erebor.toWei(amount, this.erebor.TokenInfo[type].decimals).toString();
-		this.erebor.sendTx(type)(addr, weiAmount)
-			.then((qid) => { return this.erebor.getReceipts(qid); })
-			.then((r) => { console.dir(r); })
-			.catch((err) => { console.trace(err); });
+	onStartMining = () =>{
+		this.setState({mining: true});
 	}
 
-	onWatchedTokenUpdate() {
-		return this.erebor.client.call('hotGroupInfo').then((info) => {
-			this.setState({ tokenList: Object.keys(info) })
-			this.erebor.TokenInfo = info;
-			return true;
-		})
-		.then(() => {
-			this.addressUpdate();
-		})
-		.catch((err) => {
-			console.trace(err);
-			return false;
-		})
+	onStopMining = () =>{
+		this.setState({mining: false});
 	}
 }
 
