@@ -2,6 +2,7 @@
 
 ![Erebor](https://github.com/elevenbuckets/ETHDenver_2019_Erebor/blob/master/dapps/Erebor/GUI/public/assets/icon/erebor.png)
 
+## What is Erebor?
 ### - Meta Mining ERC20 and ERC721 Tokens. 
 ### - Scaled by Peer-to-Peer State Channels. 
 ### - Built with 11BE Open SDK.
