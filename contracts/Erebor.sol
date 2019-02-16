@@ -34,7 +34,7 @@ contract Erebor{
 	address public ELEMAddr;
 	address public memberContractAddr;
 	uint constant public maxPlayer = 1000;
-	uint constant public period_all = 30;  // 7 + 3 + 20
+	uint constant public period_all = 20;  // 7 + 3 + 10
 	uint public initHeight;
 	bytes32 public difficulty = 0x0000ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff;
 	uint public fee = 10000000000000000;
@@ -213,7 +213,7 @@ contract Erebor{
                 // determine the only winner who win a Elemire
                 // TODO: better ways to determine the only winner of NFT
                 if (debug3) {
-                    if (winningTickets.length > 3) {  // '3' for debug only
+                    if (winningTickets.length >= 3) {  // '3' for debug only
                             string memory uri = bytes32ToString(claimHash);
                             iELEM(ELEMAddr).mint(msg.sender, uint(claimHash), uri);
                     }

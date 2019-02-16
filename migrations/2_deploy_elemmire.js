@@ -8,7 +8,7 @@ var nfTokenMetadata = artifacts.require("NFTokenMetadata");
 var ELEM = artifacts.require("Elemmire");
 
 var Erebor = artifacts.require("Erebor");
-var ERC20 = artifacts.require("ERC20");
+// var ERC20 = artifacts.require("ERC20");
 var StandardToken = artifacts.require("StandardToken");
 var RNT = artifacts.require("RNT");
 var SafeMath = artifacts.require("SafeMath");
@@ -39,7 +39,7 @@ module.exports = function(deployer) {
 
     deployer.deploy(ELEM).then( (dELEM) => {
         let ELEMAddr = ELEM.address;
-        deployer.deploy(MemberShip, ELEM.address).then( () => {
+        return deployer.deploy(MemberShip, ELEMAddr).then( () => {
             return dELEM.setMemberCtrAddr(MemberShip.address).then( () => {
                 return deployer.deploy(RNT).then((iRNT) => {
                     let RNTAddr = RNT.address;
