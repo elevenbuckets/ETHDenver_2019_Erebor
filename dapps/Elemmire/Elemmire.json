@@ -1,0 +1,10 @@
+{
+   "appName": "Elemmire",
+   "artifactDir": "/home/kai/Work/project/11be/dapps/Elemmire/ABI",
+   "conditionDir": "/home/kai/Work/project/11be/dapps/Elemmire/Conditions",
+   "contracts": [{ "ctrName": "Elemmire", "conditions": ["Sanity"] }],
+   "account": "0x4ad56641c569c91c64c28a904cda50ae5326da41",
+   "database": "/home/kai/Work/project/11be/dapps/Elemmire/DB",
+   "networkID": 4,
+   "version": "1.0"
+}
