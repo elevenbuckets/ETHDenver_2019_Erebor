@@ -53,21 +53,21 @@ class HeaderBarView extends _reflux2.default.Component {
 			{ className: 'headerbar' },
 			_react2.default.createElement(
 				'div',
-				{ className: 'headerbarButton', style: { color: this.props.currentView === 'AppLauncher' ? '#ff4200' : 'white' },
-					onClick: this.updateView.bind(this, 'AppLauncher') },
+				{ className: 'headerbarButton', style: { color: this.props.currentView === 'Mining' ? '#ff4200' : 'white' },
+					onClick: this.updateView.bind(this, 'Mining') },
 				'Mining'
 			),
 			_react2.default.createElement(
 				'div',
-				{ className: 'headerbarButton', style: { color: this.props.currentView === 'TokenSettings' ? '#ff4200' : 'white' },
-					onClick: this.updateView.bind(this, 'TokenSettings') },
+				{ className: 'headerbarButton', style: { color: this.props.currentView === 'MemberShip' ? '#ff4200' : 'white' },
+					onClick: this.updateView.bind(this, 'MemberShip') },
 				'MemberShip'
 			),
 			_react2.default.createElement(
 				'div',
-				{ className: 'headerbarButton', style: { color: this.props.currentView === 'Receipts' ? '#ff4200' : 'white' },
-					onClick: this.updateView.bind(this, 'Receipts') },
-				'Box'
+				{ className: 'headerbarButton', style: { color: this.props.currentView === 'Chest' ? '#ff4200' : 'white' },
+					onClick: this.updateView.bind(this, 'Chest') },
+				'Chest'
 			),
 			_react2.default.createElement(
 				'div',

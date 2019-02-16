@@ -18,6 +18,7 @@ import EreborActions from '../action/EreborActions';
 import HeaderBarView from './HeaderBarView';
 import MiningView from './MiningView';
 import MemberShipView from './MemberShipView';
+import ChestView from './ChestView';
 
 
 class MainView extends Reflux.Component {
@@ -64,7 +65,7 @@ class MainView extends Reflux.Component {
 			<div className="wrapper">
 				<HeaderBarView currentView={this.state.currentView} updateView={this.updateState.bind(this, "currentView")} />
 				<div className="content">
-					{this.state.currentView === "Mining" ? <MiningView /> : this.state.currentView === "MemberShip" ? <MembershipView /> :
+					{this.state.currentView === "Mining" ? <MiningView /> : this.state.currentView === "MemberShip" ? <MemberShipView /> :
 						<ChestView />}
 				</div>
 			</div>

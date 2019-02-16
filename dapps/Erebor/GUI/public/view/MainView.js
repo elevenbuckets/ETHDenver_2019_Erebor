@@ -38,6 +38,14 @@ var _MiningView = require('./MiningView');
 
 var _MiningView2 = _interopRequireDefault(_MiningView);
 
+var _MemberShipView = require('./MemberShipView');
+
+var _MemberShipView2 = _interopRequireDefault(_MemberShipView);
+
+var _ChestView = require('./ChestView');
+
+var _ChestView2 = _interopRequireDefault(_ChestView);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 const ipcRenderer = require('electron').ipcRenderer;
@@ -68,12 +76,8 @@ class MainView extends _reflux2.default.Component {
 		};
 
 		this.store = _EreborStore2.default;
-		// this.controlPanel = remote.getGlobal("controlPanel");
-		// this.controlPanel.client.subscribe('newJobs');
-		// this.controlPanel.client.on('newJobs', this.handleNewJobs);
-		// this.controlPanel.syncTokenInfo();
 		this.state = {
-			currentView: "AppLauncher"
+			currentView: "Mining"
 		};
 
 		this.storeKeys = ["unlocked", "currentView", "modalIsOpen", "scheduleModalIsOpen", "retrying", "rpcfailed", "configured", "userCfgDone", "syncInProgress", "blockHeight", "highestBlock"];
@@ -89,7 +93,7 @@ class MainView extends _reflux2.default.Component {
 			_react2.default.createElement(
 				'div',
 				{ className: 'content' },
-				_react2.default.createElement(_MiningView2.default, null)
+				this.state.currentView === "Mining" ? _react2.default.createElement(_MiningView2.default, null) : this.state.currentView === "MemberShip" ? _react2.default.createElement(_MemberShipView2.default, null) : _react2.default.createElement(_ChestView2.default, null)
 			)
 		);
 	}
