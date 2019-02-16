@@ -1,0 +1,70 @@
+{
+  "name": "11be-wallet-app",
+  "version": "1.0.0",
+  "main": "main.js",
+  "author": "Jason Lin",
+  "license": "GPL-3.0",
+  "description": "Electron-based Wallet App for 11BE",
+  "babel": {
+    "plugins": [
+      "transform-class-properties",
+      "transform-object-rest-spread",
+      "dynamic-import-node"
+    ],
+    "presets": [
+      "react",
+      [
+        "env",
+        {
+          "targets": {
+            "node": "8.6"
+          }
+        }
+      ]
+    ]
+  },
+  "scripts": {
+    "watch": "node_modules/.bin/browser-sync start --localOnly --files 'public/**/*.css, public/**/*.html, public/**/*.js, !node_modules/**/*' --directory",
+    "compileRelease": "./node_modules/.bin/babel src --out-dir public && cp -rvf .local public/",
+    "compile": "./node_modules/.bin/babel src --out-dir public",
+    "start": "./node_modules/electron/dist/electron .",
+    "postdist": "mkdir -p ./dist/linux-unpacked/dapps && mkdir -p ./dist/linux-unpacked/public && cp -vrf ./scripts/start.sh ./dist && cp -vrf ./dapps/installed.json ./dist/linux-unpacked/dapps/ && cp -vrf ./public/.local ./public/assets/icon ./dist/linux-unpacked/public",
+    "buildasar": "rm -fr ./dist && ./node_modules/.bin/electron-builder --linux --x64 --dir ./dist",
+    "distRelease": "npm run compileRelease && npm run buildasar && npm run postdist"
+  },
+  "dependencies": {
+    "ConfigWriter": "git+ssh://git@github.com/elevenbuckets/ConfigWriter.git",
+    "asar": "^0.14.3",
+    "async": "^2.6.1",
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.0",
+    "babel-plugin-dynamic-import-node": "^2.0.0",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-react": "^6.24.1",
+    "bladeiron_api": "git+ssh://git@github.com/elevenbuckets/bladeiron_api.git",
+    "enzyme": "^3.6.0",
+    "idb-readable-stream": "0.0.4",
+    "level-js": "^3.0.0",
+    "lodash": "^4.17.11",
+    "loopasync": "^1.1.0",
+    "react": "15.6.1",
+    "react-bootstrap": "^0.32.1",
+    "react-dom": "15.6.1",
+    "react-dropdown": "^1.4.0",
+    "react-modal": "^3.4.4",
+    "react-router-dom": "^4.2.2",
+    "react-toggle": "^4.0.2",
+    "reflux": "^6.4.1",
+    "uuid": "^3.2.1",
+    "validator": "8.0.0",
+    "webcrypto-shim": "^0.1.4",
+    "webrtcsupport": "^2.2.0"
+  },
+  "devDependencies": {
+    "browser-sync": "^2.24.6",
+    "electron": "^3.0.0",
+    "electron-builder": "^20.28.4"
+  }
+}
