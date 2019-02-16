@@ -22,6 +22,8 @@ var _path = require('path');
 
 var _path2 = _interopRequireDefault(_path);
 
+var _reactToastify = require('react-toastify');
+
 var _EreborStore = require('../store/EreborStore');
 
 var _EreborStore2 = _interopRequireDefault(_EreborStore);

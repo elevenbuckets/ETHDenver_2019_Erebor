@@ -4,6 +4,7 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import Reflux from 'reflux';
+import { ToastContainer, toast } from 'react-toastify';
 
 // Reflux store
 import EreborStore from '../store/EreborStore';
@@ -25,6 +26,9 @@ class MiningView extends Reflux.Component {
 	updateView = (view) => {
 		this.props.updateView(view);
 	}
+
+	notify = () => toast("Wow so easy !");
+
 	__renderMiningMessages = () => {
 		return this.state.currentMiningMessages.map(message => {
 			return <div>
@@ -76,6 +80,10 @@ class MiningView extends Reflux.Component {
 				<div className="miningSettings">
 					{this.__renderMiningSettings()}
 				</div>
+				<div>
+				<button onClick={this.notify}>Notify !</button>
+				<ToastContainer />
+			</div>
 			</div>
 
 

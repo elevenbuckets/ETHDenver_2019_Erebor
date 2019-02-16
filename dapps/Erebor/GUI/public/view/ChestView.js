@@ -18,8 +18,6 @@ var _reflux = require('reflux');
 
 var _reflux2 = _interopRequireDefault(_reflux);
 
-var _reactToastify = require('react-toastify');
-
 var _EreborStore = require('../store/EreborStore');
 
 var _EreborStore2 = _interopRequireDefault(_EreborStore);
@@ -33,7 +31,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 // Views
 
 // Reflux store
-class MiningView extends _reflux2.default.Component {
+class ChestView extends _reflux2.default.Component {
 	constructor(props) {
 		super(props);
 
@@ -41,9 +39,7 @@ class MiningView extends _reflux2.default.Component {
 			this.props.updateView(view);
 		};
 
-		this.notify = () => (0, _reactToastify.toast)("Wow so easy !");
-
-		this.__renderMiningMessages = () => {
+		this.__renderStoneChest = () => {
 			return this.state.currentMiningMessages.map(message => {
 				return _react2.default.createElement(
 					'div',
@@ -53,7 +49,7 @@ class MiningView extends _reflux2.default.Component {
 			});
 		};
 
-		this.__renderMiningSettings = () => {
+		this.__renderStoneTransfer = () => {
 			return _react2.default.createElement(
 				'div',
 				null,
@@ -112,30 +108,20 @@ class MiningView extends _reflux2.default.Component {
 		//console.log("In MainView render()");
 		return _react2.default.createElement(
 			'div',
-			{ className: 'mining' },
+			{ className: 'chest' },
 			_react2.default.createElement(
 				'div',
-				{ className: 'miningMessages' },
-				this.__renderMiningMessages()
+				{ className: 'chestView' },
+				this.__renderStoneChest()
 			),
 			_react2.default.createElement(
 				'div',
-				{ className: 'miningSettings' },
-				this.__renderMiningSettings()
-			),
-			_react2.default.createElement(
-				'div',
-				null,
-				_react2.default.createElement(
-					'button',
-					{ onClick: this.notify },
-					'Notify !'
-				),
-				_react2.default.createElement(_reactToastify.ToastContainer, null)
+				{ className: 'stoneTransfer' },
+				this.__renderStoneTransfer()
 			)
 		);
 	}
 }
 
 // Reflux actions
-exports.default = MiningView;
+exports.default = ChestView;
