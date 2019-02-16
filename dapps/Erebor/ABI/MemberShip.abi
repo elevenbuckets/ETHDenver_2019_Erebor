@@ -515,20 +515,12 @@
     "constant": true,
     "inputs": [
       {
-        "name": "_tokenId",
-        "type": "uint256"
+        "name": "_addr",
+        "type": "address"
       }
     ],
     "name": "getMemberInfo",
     "outputs": [
-      {
-        "name": "",
-        "type": "address"
-      },
-      {
-        "name": "",
-        "type": "uint256"
-      },
       {
         "name": "",
         "type": "uint256"
@@ -536,12 +528,20 @@
       {
         "name": "",
         "type": "bytes32"
+      },
+      {
+        "name": "",
+        "type": "uint256"
+      },
+      {
+        "name": "",
+        "type": "uint256"
       }
     ],
     "payable": false,
     "stateMutability": "view",
     "type": "function",
-    "signature": "0xae99aa3c"
+    "signature": "0x5f1231ea"
   },
   {
     "constant": false,

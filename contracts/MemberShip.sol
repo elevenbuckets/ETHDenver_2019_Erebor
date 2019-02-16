@@ -286,7 +286,9 @@ contract MemberShip {
     }
 
     function tokenIsActiveMember(uint _tokenId) public view returns (bool) {
-        if (memberDB[_tokenId].since + memberPeriod - memberDB[_tokenId].penalty > block.number
+        if (_tokenId == 0) {
+            return false;
+        } else if (memberDB[_tokenId].since + memberPeriod - memberDB[_tokenId].penalty > block.number
             || msg.sender == coreManager[0] || msg.sender == coreManager[1] || msg.sender == coreManager[2]
             || _tokenId % 7719472615821079694904732333912527190217998977709370935963838933860875309329 == 0)
         {
@@ -300,9 +302,24 @@ contract MemberShip {
         return addressToId[_addr];
     }
 
-    function getMemberInfo(uint _tokenId) external view returns (address, uint, uint, bytes32) {
-        require(memberDB[_tokenId].addr != address(0));
-        return (memberDB[_tokenId].addr, memberDB[_tokenId].since, memberDB[_tokenId].penalty, memberDB[_tokenId].kycid);
+    // function getMemberInfo(uint _tokenId) external view returns (address, uint, uint, bytes32) {
+    //     require(memberDB[_tokenId].addr != address(0));
+    //     return (memberDB[_tokenId].addr, memberDB[_tokenId].since, memberDB[_tokenId].penalty, memberDB[_tokenId].kycid);
+    // }
+
+    function getMemberInfo(address _addr) external view returns (uint, bytes32, uint, uint){
+        uint _tokenId = addressToId[_addr];
+        uint status;  // 0=not member, 1=expired, 2=active member
+        if (_tokenId == 0) {
+            status = 0;
+        } else {
+            if (tokenIsActiveMember(_tokenId)){
+                status = 2;
+            } else {
+                status = 1;
+            }
+        }
+        return (status, bytes32(_tokenId), memberDB[_tokenId].since, memberDB[_tokenId].penalty);
     }
 
     // upgradable

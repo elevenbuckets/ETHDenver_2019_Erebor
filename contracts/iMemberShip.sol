@@ -21,7 +21,7 @@ interface iMemberShip {
     function tokenIsMember(uint _tokenId) external view returns (bool);
     function tokenIsActiveMember(uint _tokenId) external view returns (bool);
     function addrToTokenId(address _addr) external view returns (uint);
-    function getMemberInfo(uint _tokenId) external view returns (address, uint, uint, bytes32);
+    function getMemberInfo(address _addr) external view returns (uint, bytes32, uint, uint);
    
     function pause() external;
     function unpause() external;
