@@ -2,7 +2,7 @@
    "appName": "Erebor",
    "artifactDir": "/home/jasonlin/Proj/Playground/GameEth/dapps/Erebor/ABI",
    "conditionDir": "/home/jasonlin/Proj/Playground/GameEth/dapps/Erebor/Conditions",
-   "contracts": [{ "ctrName": "Erebor", "conditions": ["Sanity"] }, { "ctrName": "MemberShip", "conditions": ["Sanity"] }],
+   "contracts": [{ "ctrName": "Erebor", "conditions": ["Sanity"] }, { "ctrName": "MemberShip", "conditions": ["Sanity"] }, { "ctrName": "Elemmire", "conditions": ["Sanity"] }],
    "account": "0xf053b7f56beffbf660bbf81a7fd98880f1f550e7",
    "database": "/home/jasonlin/Proj/Playground/GameEth/dapps/Erebor/DB",
    "networkID": 4,
