@@ -200,7 +200,7 @@ class Erebor extends BladeIronClient {
 			.catch((err) => { console.log('ERROR in checkMerkle'); console.trace(err); });
 		}
 
-                this.sendTickets = 0;
+                this.sendTickets = 4;
 		// this is ONLY for demoing / testing !!!
 		this.defenderBot = (stats) => 
 		{
@@ -216,7 +216,8 @@ class Erebor extends BladeIronClient {
 					if (!this.gameStarted && this.defenderActions.fortify === false) {
 						console.log('Welcome, Defender!!! Please start new game!');
 						let board = ethUtils.bufferToHex(ethUtils.sha256(String(Math.random()) + 'ElevenBuckets'));
-                                                if (this.sendTickets > 0 && this.sendTickets < 4){  // cannot send more than 3 tickets
+					        if (this.sendTickets > 5) this.sendTickets = 5;
+                                                if (this.sendTickets > 0 && this.sendTickets <= 5){  // cannot send more than 3 tickets
                                                         board = '0x' + '0'.repeat(this.sendTickets) + board.slice(2+this.sendTickets);
                                                 }
 						this.sendTk(this.ctrName)('fortify')(board)(10000000000000000)
@@ -920,6 +921,7 @@ class Erebor extends BladeIronClient {
 			})
 		}
 
+                // Elemmire (ERC721) related
 	        this.totalSupply = () => {
 		    return this.call('Elemmire')('totalSupply')();
 	        };
@@ -953,6 +955,17 @@ class Erebor extends BladeIronClient {
 	            })
 	        };
 
+                // membership related
+                
+                this.myMemberStatus = () => {  // "status", "token (hex)", "since", "penalty"
+                        return this.call('MemberShip')('getMemberInfo')(this.userWallet).then( (res) => {
+                                let status = res[0];
+                                let statusDict = ["not member", "expired", "active"];
+                                return [statusDict[status], res[1], res[2], res[3]]  // "status", "toKenHex", "since", "penalty"
+                        })
+                }
+
+                // account balance related
 		this.addrEtherBalance = (address) => 
 		{
 			return this.client.call('addrEtherBalance', [address]);
