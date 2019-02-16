@@ -951,6 +951,54 @@ class Erebor extends BladeIronClient {
 	                return Promise.all(p);
 	            })
 	        };
+
+		this.addrEtherBalance = (address) => 
+		{
+			return this.client.call('addrEtherBalance', [address]);
+		}
+
+		this.addrTokenBalance = (TokenSymbol) => (address) => 
+		{
+			return this.client.call('addrTokenBalance', [TokenSymbol, address]);
+		}
+
+		this.TokenList = this.configs.tokens; // just a list;
+		this.TokenInfo = {};
+
+		this.toWei = (eth, decimals) => this.toBigNumber(String(eth)).times(this.toBigNumber(10 ** decimals)).floor(); 
+		this.toEth = (wei, decimals) => this.toBigNumber(String(wei)).div(this.toBigNumber(10 ** decimals));
+		this.hex2num = (hex) => this.toBigNumber(String(hex)).toString();		
+
+		this.tokenWatcher = () => // dedicated 'synctokens' event handler for Erebor app
+		{
+			return this.client.call('hotGroupInfo').then((info) => {
+				this.TokenInfo = info;
+
+				return true;
+			})
+			.catch((err) => {
+				console.trace(err);
+				return false;
+			})
+		}
+
+		this.setGasPrice = (priceInWei) => 
+		{
+			return this.client.call('setGasPrice', priceInWei);
+		}
+
+		this.setGWeiGasPrice = (priceInGWei) =>
+		{
+			let priceInWei = this.toWei(priceInGWei, 9);
+
+			return this.setGasPrice(priceInWei);
+		}
+
+		this.gasPriceEst = () => 
+		{
+			return this.client.call('gasPriceEst');
+		}
+
 	}
 }
 
