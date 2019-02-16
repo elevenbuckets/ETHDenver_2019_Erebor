@@ -60,7 +60,7 @@ class MiningView extends _reflux2.default.Component {
 				return _react2.default.createElement(
 					'div',
 					null,
-					message
+					"> " + message
 				);
 			});
 		};
@@ -99,10 +99,9 @@ class MiningView extends _reflux2.default.Component {
 
 		this.store = _EreborStore2.default;
 		this.state = {
-			currentMiningMessages: ["Currently mining, the expected mined time is 10 min,", "Keep going"],
 			miningRole: "Gamer"
 		};
-		this.storeKeys = ["mining"];
+		this.storeKeys = ["mining", "currentMiningMessages"];
 	}
 
 	render() {
@@ -119,15 +118,6 @@ class MiningView extends _reflux2.default.Component {
 				'div',
 				{ className: 'miningSettings' },
 				this.__renderMiningSettings()
-			),
-			_react2.default.createElement(
-				'div',
-				null,
-				_react2.default.createElement(
-					'button',
-					{ onClick: this.notify },
-					'Notify !'
-				)
 			)
 		);
 	}

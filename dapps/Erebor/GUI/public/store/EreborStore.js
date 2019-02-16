@@ -44,7 +44,6 @@ class EreborStore extends _reflux2.default.Store {
 			blockHeight: null,
 			blockTime: null,
 			highestBlock: 0,
-			gasPrice: 0,
 			address: null,
 			selected_token_name: '',
 			balances: { 'ETH': 0 },
@@ -56,13 +55,16 @@ class EreborStore extends _reflux2.default.Store {
 			connected: true,
 			wait4peers: true,
 			syncInProgress: false,
+			currentMiningMessages: ["Currently mining, the expected mined time is 10 min,", "Keep going"],
 			mining: false
 		};
 
 		this.listenables = _EreborActions2.default;
 		this.erebor = _electron.remote.getGlobal('erebor');
 		this.erebor.client.subscribe('ethstats');
-		this.setState({ gasPrice: this.erebor.configs.defaultGasPrice }); // does not really work, since CP control gas price
+
+		//Overwrite the function with pass the state
+		this.erebor.reactStateTrigger = state => {};
 
 		this.addressUpdate = () => {
 			if (this.state.lesDelay === true || this.state.address === null) return; // do nothing, since statusUpdate is doing it already
@@ -205,10 +207,6 @@ class EreborStore extends _reflux2.default.Store {
 		this.setState({ lesDelay: false, balances: this._balances, tokenBalance: this._tokenBalance, showingBlock: this.state.blockHeight });
 		this._balances = { 'ETH': 0 };
 		this._tokenBalance = [];
-	}
-
-	onSelectedTokenUpdate(value) {
-		this.setState({ selected_token_name: value });
 	}
 
 }

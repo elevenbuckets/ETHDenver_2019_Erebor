@@ -19,10 +19,9 @@ class MiningView extends Reflux.Component {
 		super(props);
 		this.store = EreborStore;
 		this.state = {
-			currentMiningMessages: ["Currently mining, the expected mined time is 10 min,", "Keep going"],
 			miningRole: "Gamer"
 		}
-		this.storeKeys = ["mining"];
+		this.storeKeys = ["mining","currentMiningMessages"];
 	}
 
 	updateView = (view) => {
@@ -42,7 +41,7 @@ class MiningView extends Reflux.Component {
 	__renderMiningMessages = () => {
 		return this.state.currentMiningMessages.map(message => {
 			return <div>
-				{message}
+				{"> " +  message}
 			</div>
 		})
 	}
