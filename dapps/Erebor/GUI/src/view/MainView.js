@@ -6,6 +6,7 @@ import ReactDOM from 'react-dom';
 import Reflux from 'reflux';
 const ipcRenderer = require('electron').ipcRenderer;
 import path from 'path';
+import { ToastContainer, toast } from 'react-toastify';
 
 // Reflux store
 import EreborStore from '../store/EreborStore';
@@ -58,17 +59,23 @@ class MainView extends Reflux.Component {
 	}
 
 
+
+
+
 	render() {
 		console.log("In MainView render(); syncInProgress = " + this.state.syncInProgress);
 
 		return (
 			<div className="wrapper">
 				<HeaderBarView currentView={this.state.currentView} updateView={this.updateState.bind(this, "currentView")} />
-				<div className="content">
+
+			<div className="content">
 					{this.state.currentView === "Mining" ? <MiningView /> : this.state.currentView === "MemberShip" ? <MemberShipView /> :
 						<ChestView />}
 				</div>
+				<ToastContainer />
 			</div>
+			
 		)
 
 	}

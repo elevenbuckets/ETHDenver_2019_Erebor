@@ -6393,12 +6393,12 @@
         }
       },
       "links": {},
-      "address": "0x939C8157c921f215f2e854a1306D7f6E3ca5d627",
-      "transactionHash": "0xbdcf9483be529e72b35f8079126bd3f105894daec6e7de1cb7c2eabe43078ee9"
+      "address": "0x2450655534Ad443A159B9cC6968Fc5d108027332",
+      "transactionHash": "0x9785fcc26c4accb0784cfd630353e4e036c17590a36c76d27c961a4e39a7a603"
     }
   },
   "schemaVersion": "3.0.1",
-  "updatedAt": "2019-02-16T14:40:56.897Z",
+  "updatedAt": "2019-02-16T18:24:14.822Z",
   "devdoc": {
     "methods": {
       "approve(address,uint256)": {

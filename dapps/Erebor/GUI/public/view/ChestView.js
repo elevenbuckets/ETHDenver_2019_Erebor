@@ -18,8 +18,6 @@ var _reflux = require('reflux');
 
 var _reflux2 = _interopRequireDefault(_reflux);
 
-var _reactToastify = require('react-toastify');
-
 var _EreborStore = require('../store/EreborStore');
 
 var _EreborStore2 = _interopRequireDefault(_EreborStore);
@@ -33,7 +31,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 // Views
 
 // Reflux store
-class MiningView extends _reflux2.default.Component {
+class ChestView extends _reflux2.default.Component {
 	constructor(props) {
 		super(props);
 
@@ -41,40 +39,44 @@ class MiningView extends _reflux2.default.Component {
 			this.props.updateView(view);
 		};
 
-		this.handleClickMining = () => {
-			if (this.state.mining) {
-				_EreborActions2.default.stopMining();
-			} else {
-				_EreborActions2.default.startMining();
-			}
-		};
-
-		this.notify = () => (0, _reactToastify.toast)(_react2.default.createElement(
-			'div',
-			null,
-			'Congratulation! Just mined a token successfully'
-		));
-
-		this.__renderMiningMessages = () => {
+		this.__renderStoneChest = () => {
 			return this.state.currentMiningMessages.map(message => {
 				return _react2.default.createElement(
 					'div',
 					null,
-					"> " + message
+					message
 				);
 			});
 		};
 
-		this.__renderMiningSettings = () => {
+		this.__renderStoneTransfer = () => {
 			return _react2.default.createElement(
 				'div',
 				null,
+				_react2.default.createElement(
+					'div',
+					{ className: 'headerbarButton', style: { color: this.props.currentView === 'AppLauncher' ? '#ff4200' : 'white' },
+						onClick: this.updateView.bind(this, 'AppLauncher') },
+					'Gamer'
+				),
+				_react2.default.createElement(
+					'div',
+					{ className: 'headerbarButton', style: { color: this.props.currentView === 'TokenSettings' ? '#ff4200' : 'white' },
+						onClick: this.updateView.bind(this, 'TokenSettings') },
+					'Defender'
+				),
+				_react2.default.createElement(
+					'div',
+					{ className: 'headerbarButton', style: { color: this.props.currentView === 'Receipts' ? '#ff4200' : 'white' },
+						onClick: this.updateView.bind(this, 'Receipts') },
+					'Validator'
+				),
 				this.__renderMiningRole(this.state.miningRole)
 			);
 		};
 
 		this.__renderMiningRole = role => {
-			return _react2.default.createElement(
+			return role === "Gamer" ? _react2.default.createElement(
 				'div',
 				{ className: 'gamerSetting' },
 				_react2.default.createElement(
@@ -92,36 +94,34 @@ class MiningView extends _reflux2.default.Component {
 						},
 						value: this.state.recipient, placeholder: 'Ethereum Address' })
 				),
-				_react2.default.createElement('input', { type: 'button', className: 'button', style: { margin: "40px 0 0 40px", fontSize: "22px" },
-					value: this.state.mining ? "stop" : "start", disabled: this.state.mining && !this.state.canQuit, onClick: this.handleClickMining })
-			);
+				_react2.default.createElement('input', { type: 'button', className: 'button', style: { margin: "40px 0 0 40px", fontSize: "22px" }, value: 'start', onClick: this.handleSend })
+			) : _react2.default.createElement('div', null);
 		};
 
-		this.store = _EreborStore2.default;
 		this.state = {
+			currentMiningMessages: ["Currently mining, the expected mined time is 10 min,", "Keep going"],
 			miningRole: "Gamer"
 		};
-		this.storeKeys = ["mining", "currentMiningMessages"];
 	}
 
 	render() {
 		//console.log("In MainView render()");
 		return _react2.default.createElement(
 			'div',
-			{ className: 'mining' },
+			{ className: 'chest' },
 			_react2.default.createElement(
 				'div',
-				{ className: 'miningMessages' },
-				this.__renderMiningMessages()
+				{ className: 'chestView' },
+				this.__renderStoneChest()
 			),
 			_react2.default.createElement(
 				'div',
-				{ className: 'miningSettings' },
-				this.__renderMiningSettings()
+				{ className: 'stoneTransfer' },
+				this.__renderStoneTransfer()
 			)
 		);
 	}
 }
 
 // Reflux actions
-exports.default = MiningView;
+exports.default = ChestView;

@@ -10,31 +10,31 @@ class EreborStore extends Reflux.Store {
 
 		this.state =
 			{
-				tokenBalance: [],
-				passManaged: {},
-				accounts: [],
 				lesDelay: false,
 				blockHeight: null,
 				blockTime: null,
 				highestBlock: 0,
-				gasPrice: 0,
 				address: null,
 				selected_token_name: '',
 				balances: { 'ETH': 0 },
-				gasPriceOption: "high",
-				customGasPrice: null,
-				gasPriceInfo: null,
-				tokenList: [],
-				showingBlock: 0,
 				connected: true,
 				wait4peers: true,
-				syncInProgress: false
+				syncInProgress: false,
+				canQuit: true,
+				stateMsg: null,
+				result: null,
+				currentMiningMessages: ["Currently mining, the expected mined time is 10 min,", "Keep going"],
+				mining: false
 			}
 
 		this.listenables = EreborActions;
 		this.erebor = remote.getGlobal('erebor');
 		this.erebor.client.subscribe('ethstats');
-		this.setState({ gasPrice: this.erebor.configs.defaultGasPrice }); // does not really work, since CP control gas price
+
+		//Overwrite the function with pass the state
+		this.erebor.reactStateTrigger = (state) =>{
+			this.setState(state);
+		}
 
 		this.addressUpdate = () => {
 			if (this.state.lesDelay === true || this.state.address === null) return; // do nothing, since statusUpdate is doing it already
@@ -72,16 +72,6 @@ class EreborStore extends Reflux.Store {
 			} else {
 				this.setState({ ...stats, wait4peers: false, syncInProgress: false });
 			}
-
-			this.erebor.allAccounts().then((addrs) => {
-				if (addrs.length !== this.state.accounts.length) this.setState({ accounts: addrs });
-
-				if (this.state.address !== null) {
-					return this.addressUpdate();
-				} else {
-					this.setState({ balances: { 'ETH': 0 }, selected_token_name: '' });
-				}
-			});
 
 			this.erebor.gasPriceEst().then((est) => {
 				this.setState({ gasPriceInfo: est, gasPrice: est[this.state.gasPriceOption] });
@@ -177,34 +167,12 @@ class EreborStore extends Reflux.Store {
 		this._tokenBalance = [];
 	}
 
-	onSelectedTokenUpdate(value) {
-		this.setState({ selected_token_name: value });
+	onStartMining = () =>{
+		this.setState({mining: true});
 	}
 
-	onSend(fromAddr, addr, type, amount) {
-		if (fromAddr !== this.erebor.userErebor) {
-			console.log("no password"); return;
-		}
-		let weiAmount = type === 'ETH' ? this.erebor.toWei(amount, 18).toString() : this.erebor.toWei(amount, this.erebor.TokenInfo[type].decimals).toString();
-		this.erebor.sendTx(type)(addr, weiAmount)
-			.then((qid) => { return this.erebor.getReceipts(qid); })
-			.then((r) => { console.dir(r); })
-			.catch((err) => { console.trace(err); });
-	}
-
-	onWatchedTokenUpdate() {
-		return this.erebor.client.call('hotGroupInfo').then((info) => {
-			this.setState({ tokenList: Object.keys(info) })
-			this.erebor.TokenInfo = info;
-			return true;
-		})
-		.then(() => {
-			this.addressUpdate();
-		})
-		.catch((err) => {
-			console.trace(err);
-			return false;
-		})
+	onStopMining = () =>{
+		this.setState({mining: false});
 	}
 }
 

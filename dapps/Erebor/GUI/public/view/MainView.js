@@ -22,6 +22,8 @@ var _path = require('path');
 
 var _path2 = _interopRequireDefault(_path);
 
+var _reactToastify = require('react-toastify');
+
 var _EreborStore = require('../store/EreborStore');
 
 var _EreborStore2 = _interopRequireDefault(_EreborStore);
@@ -94,7 +96,8 @@ class MainView extends _reflux2.default.Component {
 				'div',
 				{ className: 'content' },
 				this.state.currentView === "Mining" ? _react2.default.createElement(_MiningView2.default, null) : this.state.currentView === "MemberShip" ? _react2.default.createElement(_MemberShipView2.default, null) : _react2.default.createElement(_ChestView2.default, null)
-			)
+			),
+			_react2.default.createElement(_reactToastify.ToastContainer, null)
 		);
 	}
 }
