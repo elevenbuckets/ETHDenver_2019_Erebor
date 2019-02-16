@@ -1,8 +1,11 @@
 {
-  "name": "EreborToken",
+  "name": "gameths",
   "version": "1.0.0",
-  "description": "`Ereber Token`, symbol `ERT`, is a Non-Fungible Token (NFT).",
-  "main": "index.js",
+  "description": "",
+  "main": "truffle.js",
+  "directories": {
+    "test": "test"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -10,6 +13,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bladeiron_api": "git+ssh://git@github.com/elevenbuckets/bladeiron_api.git",
+    "ethereumjs-utils": "^5.2.5",
+    "level": "^4.0.0",
+    "merkle_tree": "git+ssh://git@github.com/elevenbuckets/merkle_tree.git",
+    "mkdirp": "^0.5.1",
     "truffle": "^5.0.2"
   }
 }

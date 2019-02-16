@@ -7,8 +7,8 @@ module.exports = {
     },
     networks: {
         development: {
-            // host: "172.17.0.2",  // use it for server in docker
-            host: "127.0.0.1",  // use it for server in docker
+            // host: "172.17.0.2",  // for docker
+            host: "127.0.0.1",
             port: 8545,
             gas: 6400000,
             network_id: "*" // Match any network id

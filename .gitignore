@@ -60,5 +60,12 @@ typings/
 # next.js build output
 .next
 
-# truffle output
-build/*
+# truffle and some dot files
+build/
+.node-xmlhttprequest-*
+.DS_Store
+.vscode
+*.swp
+.solhint.json
+.eslintrc.js
+.solcover.js
