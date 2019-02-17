@@ -986,8 +986,24 @@ class Erebor extends BladeIronClient {
                         })
                 }
 
-                // account balance related
+                // gem related
+                let getGemParams = (tokenHex) => {
+                        if (tokenHex.substring(0, 2) === '0x') tokenHex = tokenHex.slice(2);
+                        let gem = {};
 
+                        let types = 36;
+                        let stoneIdx = (tokenHex.substring(60,64) % types + 1);
+                        gem["type"] = stoneIdx < 10 ? 'stone0' + stoneIdx : 'stone' + stoneIdx;  // from stone01 to stone36
+                        gem["strength"] = tokenHex.substring(56, 60) % types + 1;  // 16 levels, from 1 to 16
+
+                        let usages = ["raw", "sword", "axe", "shield", "helmet", "crown", "ring", "armor", "amulet", "bracelet"];
+                        gem["usage"] = usages[tokenHex.substring(52, 56) % usages.length];
+                        gem["colorHue"] = tokenHex.substring(48, 52) % 360;  // from 0 to 359
+
+                        return gem;
+                }
+
+                // account balance related
 		this.addrEtherBalance = (address) => 
 		{
 			return this.client.call('addrEtherBalance', [address]);
