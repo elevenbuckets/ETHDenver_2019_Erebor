@@ -10,6 +10,7 @@ import EreborStore from '../store/EreborStore';
 
 // Reflux actions
 import EreborActions from '../action/EreborActions';
+import { remote } from 'electron';
 
 // Views
 
@@ -17,8 +18,10 @@ class ChestView extends Reflux.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+			stoneCount: 0,
 			stoneId: null
 		}
+		this.erebor = remote.getGlobal('erebor');
 	}
 
 	updateView = (view) => {
@@ -28,27 +31,35 @@ class ChestView extends Reflux.Component {
 	stoneInfo = (id) => { this.setState({stoneId: id})}
 
 	__renderStoneChest = () => {
+			let inner = [];
+			this.erebor.myTokens().then((p) => {
+				p.map((s) => {
+					console.log(`DEBUG: s is ${s}`) ;
+					let sti = this.erebor.getGemParams('0x' + s); console.dir(sti);
+					inner.push(<div className="stoneNFT"><img src={`assets/elemmire/${sti.type}.png`} 
+							onClick={this.stoneInfo.bind(this, sti.strength)}></img></div>);
+				})
+				this.setState({stoneCount: p.length});
+			})
 		return <div className="chestView">
-			<div className="stoneNFT"><img src="assets/elemmire/stone01.png" onClick={this.stoneInfo.bind(this, 1)}></img></div>
-			<div className="stoneNFT"><img src="assets/elemmire/stone02.png" onClick={this.stoneInfo.bind(this, 2)}></img></div>
-			<div className="stoneNFT"><img src="assets/elemmire/stone03.png" onClick={this.stoneInfo.bind(this, 3)}></img></div>
-			<div className="stoneNFT"><img src="assets/elemmire/stone14.png" onClick={this.stoneInfo.bind(this, 14)}></img></div>
-			<div className="stoneNFT"><img src="assets/elemmire/stone15.png" onClick={this.stoneInfo.bind(this, 15)}></img></div>
+			{inner}
 		</div>
 	}
 
 	__renderStoneTransfer = () => {
 		return (
 			this.state.stoneId === null ? <div>Welcome to Erebor</div>
-				: <div>Showing Stone Info for stone {this.state.stoneId}</div>
+				: <div>Showing Stone of strength {this.state.stoneId}</div>
 		)
 	}
 
 	render() {
-		//console.log("In MainView render()");
+		console.log("In ChestView render()" + this.erebor.userWallet);
 		return (
 			<div className="chest">
+				<div className="chestView">
 					{this.__renderStoneChest()}
+				</div>
 				<div className="stoneTransfer">
 					{this.__renderStoneTransfer()}
 				</div>
