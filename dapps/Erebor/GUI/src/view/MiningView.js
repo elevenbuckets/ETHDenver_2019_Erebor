@@ -21,7 +21,7 @@ class MiningView extends Reflux.Component {
 		this.state = {
 			miningRole: "Gamer"
 		}
-		this.storeKeys = ["mining","currentMiningMessages"];
+		this.storeKeys = ["mining","currentMiningMessages","canQuit","address"];
 	}
 
 	updateView = (view) => {
@@ -62,11 +62,11 @@ class MiningView extends Reflux.Component {
 						border: "1px solid white",
 						color: "white",
 						fontWeight: "bold",
-						fontSize: "24px",
+						fontSize: "25px",
 						fontFamily: "monospace",
 						textAlign: "center"
 					}}
-					value={this.state.recipient} placeholder="Ethereum Address" />
+				 defaultValue={this.state.address} placeholder="Ethereum Address" />
 
 			</label>
 			<input type="button" className="button" style={{ margin: "40px 0 0 40px", fontSize: "22px" }}

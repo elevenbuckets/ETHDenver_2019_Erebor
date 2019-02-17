@@ -58,7 +58,7 @@ class EreborStore extends _reflux2.default.Store {
 
 		this.listenables = _EreborActions2.default;
 		this.erebor = _electron.remote.getGlobal('erebor');
-		this.erebor.client.subscribe('ethstats');
+		// this.erebor.client.subscribe('ethstats');
 
 		//Overwrite the function with pass the state
 		this.reactStateTrigger = state => {
@@ -122,6 +122,7 @@ class EreborStore extends _reflux2.default.Store {
 
 		// this.erebor.client.on('synctokens', this.syncTokens);
 		this.erebor.linkAccount(this.erebor.address);
+		this.setState({ address: this.erebor.address });
 
 		this._count;
 		this._target;

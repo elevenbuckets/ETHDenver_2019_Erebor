@@ -39,68 +39,57 @@ class ChestView extends _reflux2.default.Component {
 			this.props.updateView(view);
 		};
 
-		this.__renderStoneChest = () => {
-			return this.state.currentMiningMessages.map(message => {
-				return _react2.default.createElement(
-					'div',
-					null,
-					message
-				);
-			});
+		this.stoneInfo = id => {
+			this.setState({ stoneId: id });
 		};
 
-		this.__renderStoneTransfer = () => {
+		this.__renderStoneChest = () => {
 			return _react2.default.createElement(
 				'div',
-				null,
+				{ className: 'chestView' },
 				_react2.default.createElement(
 					'div',
-					{ className: 'headerbarButton', style: { color: this.props.currentView === 'AppLauncher' ? '#ff4200' : 'white' },
-						onClick: this.updateView.bind(this, 'AppLauncher') },
-					'Gamer'
+					{ className: 'stoneNFT' },
+					_react2.default.createElement('img', { src: 'assets/elemmire/stone01.png', onClick: this.stoneInfo.bind(this, 1) })
 				),
 				_react2.default.createElement(
 					'div',
-					{ className: 'headerbarButton', style: { color: this.props.currentView === 'TokenSettings' ? '#ff4200' : 'white' },
-						onClick: this.updateView.bind(this, 'TokenSettings') },
-					'Defender'
+					{ className: 'stoneNFT' },
+					_react2.default.createElement('img', { src: 'assets/elemmire/stone02.png', onClick: this.stoneInfo.bind(this, 2) })
 				),
 				_react2.default.createElement(
 					'div',
-					{ className: 'headerbarButton', style: { color: this.props.currentView === 'Receipts' ? '#ff4200' : 'white' },
-						onClick: this.updateView.bind(this, 'Receipts') },
-					'Validator'
+					{ className: 'stoneNFT' },
+					_react2.default.createElement('img', { src: 'assets/elemmire/stone03.png', onClick: this.stoneInfo.bind(this, 3) })
 				),
-				this.__renderMiningRole(this.state.miningRole)
+				_react2.default.createElement(
+					'div',
+					{ className: 'stoneNFT' },
+					_react2.default.createElement('img', { src: 'assets/elemmire/stone14.png', onClick: this.stoneInfo.bind(this, 14) })
+				),
+				_react2.default.createElement(
+					'div',
+					{ className: 'stoneNFT' },
+					_react2.default.createElement('img', { src: 'assets/elemmire/stone15.png', onClick: this.stoneInfo.bind(this, 15) })
+				)
 			);
 		};
 
-		this.__renderMiningRole = role => {
-			return role === "Gamer" ? _react2.default.createElement(
+		this.__renderStoneTransfer = () => {
+			return this.state.stoneId === null ? _react2.default.createElement(
 				'div',
-				{ className: 'gamerSetting' },
-				_react2.default.createElement(
-					'label',
-					{ className: 'item TransferTo', style: { border: 'none' } },
-					'Addr:',
-					_react2.default.createElement('input', { size: 30, type: 'text', style: {
-							backgroundColor: "rgba(255,255,255,0)",
-							border: "1px solid white",
-							color: "white",
-							fontWeight: "bold",
-							fontSize: "24px",
-							fontFamily: "monospace",
-							textAlign: "center"
-						},
-						value: this.state.recipient, placeholder: 'Ethereum Address' })
-				),
-				_react2.default.createElement('input', { type: 'button', className: 'button', style: { margin: "40px 0 0 40px", fontSize: "22px" }, value: 'start', onClick: this.handleSend })
-			) : _react2.default.createElement('div', null);
+				null,
+				'Welcome to Erebor'
+			) : _react2.default.createElement(
+				'div',
+				null,
+				'Showing Stone Info for stone ',
+				this.state.stoneId
+			);
 		};
 
 		this.state = {
-			currentMiningMessages: ["Currently mining, the expected mined time is 10 min,", "Keep going"],
-			miningRole: "Gamer"
+			stoneId: null
 		};
 	}
 
@@ -109,11 +98,7 @@ class ChestView extends _reflux2.default.Component {
 		return _react2.default.createElement(
 			'div',
 			{ className: 'chest' },
-			_react2.default.createElement(
-				'div',
-				{ className: 'chestView' },
-				this.__renderStoneChest()
-			),
+			this.__renderStoneChest(),
 			_react2.default.createElement(
 				'div',
 				{ className: 'stoneTransfer' },

@@ -81,16 +81,16 @@ class MiningView extends _reflux2.default.Component {
 					'label',
 					{ className: 'item TransferTo', style: { border: 'none' } },
 					'Addr:',
-					_react2.default.createElement('input', { size: 30, type: 'text', style: {
+					_react2.default.createElement('input', { size: 40, type: 'text', style: {
 							backgroundColor: "rgba(255,255,255,0)",
 							border: "1px solid white",
 							color: "white",
 							fontWeight: "bold",
-							fontSize: "24px",
+							fontSize: "15px",
 							fontFamily: "monospace",
 							textAlign: "center"
 						},
-						value: this.state.recipient, placeholder: 'Ethereum Address' })
+						defaultValue: this.state.address, placeholder: 'Ethereum Address' })
 				),
 				_react2.default.createElement('input', { type: 'button', className: 'button', style: { margin: "40px 0 0 40px", fontSize: "22px" },
 					value: this.state.mining ? "stop" : "start", disabled: this.state.mining && !this.state.canQuit, onClick: this.handleClickMining })
@@ -101,7 +101,7 @@ class MiningView extends _reflux2.default.Component {
 		this.state = {
 			miningRole: "Gamer"
 		};
-		this.storeKeys = ["mining", "currentMiningMessages"];
+		this.storeKeys = ["mining", "currentMiningMessages", "canQuit", "address"];
 	}
 
 	render() {

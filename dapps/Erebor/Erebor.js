@@ -448,7 +448,7 @@ class Erebor extends BladeIronClient {
 			}
 		}	
 
-		// this.reactStateTrigger = (rstate) => { return rstate; }
+		this.reactStateTrigger = (rstate) => { return rstate; }
 		this.setReactStateTrigger = (reactStateTrigger) =>{
 			this.reactStateTrigger = reactStateTrigger;
 		}
