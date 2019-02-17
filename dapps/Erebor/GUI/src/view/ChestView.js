@@ -41,8 +41,7 @@ class ChestView extends Reflux.Component {
 		let inner = [];
 		this.erebor.myTokens().then((p) => {
 			p.map((s) => {
-				//console.log(`DEBUG: s is ${s}`) ;
-				let sti = this.erebor.getGemParams('0x' + s);
+				let sti = this.erebor.getGemParams(s);
 				inner.push(<div className="stoneNFT"><img src={`assets/elemmire/${sti.type}.png`} 
 						onClick={this.stoneInfo.bind(this, sti.strength)}></img></div>);
 			})
