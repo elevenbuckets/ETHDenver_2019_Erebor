@@ -24,7 +24,7 @@ contract RNT is StandardToken {
        totalSupply = 300000000000000000;
        _balances[0xB440ea2780614b3c6a00e512f432785E7dfAFA3E] = 100000000000000000;
        _balances[0x4AD56641C569C91C64C28a904cda50AE5326Da41] = 100000000000000000;
-       _balances[0x362ea687b8a372a0235466a097e578d55491d37f] = 100000000000000000;
+       _balances[0xaF7400787c54422Be8B44154B1273661f1259CcD] = 100000000000000000;
     }
 
     function symbol() public view returns (string memory){

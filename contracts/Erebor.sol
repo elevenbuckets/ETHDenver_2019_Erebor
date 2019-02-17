@@ -40,7 +40,7 @@ contract Erebor{
 	uint public fee = 10000000000000000;
 	bool public setup = false;
 	uint public playercount = 0;
-	// bool NFTClaimed = false;
+        uint public ticketsToWinNFT = 2;  // use small number for debug only
 
 	struct playerInfo {
 		// uint since;     // block height when joined
@@ -213,7 +213,7 @@ contract Erebor{
                 // determine the only winner who win a Elemire
                 // TODO: better ways to determine the only winner of NFT
                 if (debug3) {
-                    if (winningTickets.length >= 3) {  // '3' for debug only
+                    if (winningTickets.length >= ticketsToWinNFT) {  // use small number for debug only
                             string memory uri = bytes32ToString(claimHash);
                             iELEM(ELEMAddr).mint(msg.sender, uint(claimHash), uri);
                     }
@@ -459,6 +459,12 @@ contract Erebor{
 
         function newMemberAddr(address _addr) public defenderOnly returns (bool){
                 memberContractAddr = _addr;
+                return true;
+        }
+
+        function renewTicketsToWinNFT(uint _n) public defenderOnly returns (bool){
+                require(_n > 1 && _n < 10);
+                ticketsToWinNFT = _n;
                 return true;
         }
 

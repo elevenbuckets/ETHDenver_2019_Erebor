@@ -35,6 +35,12 @@ module.exports =
 	Erebor_debugParams_sanity(addr, jobObj)
 	{
 		return true;
+        },
+
+        Erebor_renewTicketsToWinNFT_sanity(addr, jobObj)
+        {
+                return true;
         }
+
     
 }
