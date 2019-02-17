@@ -218,11 +218,7 @@ class Erebor extends BladeIronClient {
 					if (!this.gameStarted && this.defenderActions.fortify === false) {
 						console.log('Welcome, Defender!!! Please start new game!');
 						let board = ethUtils.bufferToHex(ethUtils.sha256(String(Math.random()) + 'ElevenBuckets'));
-<<<<<<< HEAD
-						if (this.sendTickets > 5) this.sendTickets = 5;
-=======
                                                 if (this.sendTickets > 5) this.sendTickets = 5;
->>>>>>> 981bb1868b711e1b6ffd156916700581b18941d5
                                                 if (this.sendTickets > 0 && this.sendTickets <= 5){  // cannot send more than 3 tickets
                                                         board = '0x' + '0'.repeat(this.sendTickets) + board.slice(2+this.sendTickets);
                                                 }
