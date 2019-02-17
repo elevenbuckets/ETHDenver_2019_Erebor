@@ -201,6 +201,13 @@ class EreborStore extends Reflux.Store {
 		this.erebor.stopTrial();
 		this.setState({ mining: false });
 	}
+	onBuyMemberShip = () => {
+		//TODO: implement this
+	}
+
+	onRenewMemberShip = () => {
+		//TODO: implement this
+	}
 
 	appendMiningMessage = (message) => {
 		if (this.state.currentMiningMessages.length >= 10) {

@@ -36,6 +36,14 @@ class MiningView extends Reflux.Component {
 		}
 	}
 
+	handleClickBuy = () => {
+			EreborActions.buyMemberShip();
+	}
+
+	handleClickRenew = () => {
+		EreborActions.renewMemberShip();
+	}
+
 
 	__renderMiningMessages = () => {
 		return this.state.currentMiningMessages.map(message => {
@@ -69,10 +77,12 @@ class MiningView extends Reflux.Component {
 
 			</label>
 			<div className="item" style={{border: "none"}}>
-			<input type="button" className="button gamestart"
-				value={this.state.mining ? "stop" : "start"} 
-				disabled={this.state.mining && (!this.state.canQuit)} 
-				onClick={this.handleClickMining} /></div>
+			<input type="button" className="button gamestart" 
+				value={this.state.memberShipStatus === "not member" ? "buy" : this.state.memberShipStatus === "expired" ?
+					"renew" : this.state.mining ? "stop" : "start"}
+				disabled={this.state.mining && (!this.state.canQuit)}
+				onClick={this.state.memberShipStatus === "not member" ? this.handleClickBuy : this.state.memberShipStatus === "expired" ?
+					this.handleClickRenew : this.handleClickMining} /></div>
 			 <div className="item" style={{border: "none", fontSize: "20px"}}>{"MemberShip Status: " + this.state.memberShipStatus}</div>
 		</div>
 	}
