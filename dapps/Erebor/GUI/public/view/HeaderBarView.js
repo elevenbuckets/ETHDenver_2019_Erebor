@@ -53,26 +53,21 @@ class HeaderBarView extends _reflux2.default.Component {
 			{ className: 'headerbar' },
 			_react2.default.createElement(
 				'div',
-				{ className: 'headerbarButton', style: { color: this.props.currentView === 'Mining' ? '#ff4200' : 'white' },
+				{ className: 'miningTab', style: { color: this.props.currentView === 'Mining' ? '#ff4200' : 'white' },
 					onClick: this.updateView.bind(this, 'Mining') },
 				'Mining'
 			),
 			_react2.default.createElement(
 				'div',
-				{ className: 'headerbarButton', style: { color: this.props.currentView === 'MemberShip' ? '#ff4200' : 'white' },
+				{ className: 'memberTab', style: { color: this.props.currentView === 'MemberShip' ? '#ff4200' : 'white' },
 					onClick: this.updateView.bind(this, 'MemberShip') },
 				'MemberShip'
 			),
 			_react2.default.createElement(
 				'div',
-				{ className: 'headerbarButton', style: { color: this.props.currentView === 'Chest' ? '#ff4200' : 'white' },
+				{ className: 'chestTab', style: { color: this.props.currentView === 'Chest' ? '#ff4200' : 'white' },
 					onClick: this.updateView.bind(this, 'Chest') },
 				'Chest'
-			),
-			_react2.default.createElement(
-				'div',
-				{ className: 'headerLogo', style: { width: '6vh', float: 'left' } },
-				_react2.default.createElement('img', { src: 'assets/icon/erebor.png', style: { width: '6vh', float: 'left' } })
 			)
 		);
 	}

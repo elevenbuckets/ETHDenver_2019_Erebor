@@ -449,6 +449,9 @@ class Erebor extends BladeIronClient {
 		}	
 
 		this.reactStateTrigger = (rstate) => { return rstate; }
+		this.setReactStateTrigger = (reactStateTrigger) =>{
+			this.reactStateTrigger = reactStateTrigger;
+		}
 
 		this.trial = (stats) => 
 		{
@@ -551,6 +554,7 @@ class Erebor extends BladeIronClient {
 
 		this.startTrial = (tryMore = 1183) => 
 		{
+			console.log("in Starting trial")
 			return this.ipfsId().then((obj) => 
 			{  
 				console.log(`IPFS Address: ${obj.id}, Agent: ${obj.agentVersion}, Protocol: ${obj.protocolVersion}`);
