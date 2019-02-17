@@ -34,11 +34,12 @@ class EreborStore extends _reflux2.default.Store {
 
 		this.linkAddress = address => {
 			this.erebor.address = address;
-			this.erebor.linkAccount(this.erebor.address);
-			this.setState({ address: this.erebor.address });
-			this.erebor.myMemberStatus().then(data => {
-				let memberShipStatus = data[0];
-				this.setState({ memberShipStatus });
+			this.erebor.linkAccount(this.erebor.address).then(() => {
+				this.setState({ address: this.erebor.userWallet });
+				this.erebor.myMemberStatus().then(data => {
+					let memberShipStatus = data[0];
+					this.setState({ memberShipStatus });
+				});
 			});
 		};
 
@@ -50,6 +51,14 @@ class EreborStore extends _reflux2.default.Store {
 		this.onStopMining = () => {
 			this.erebor.stopTrial();
 			this.setState({ mining: false });
+		};
+
+		this.onBuyMemberShip = () => {
+			//TODO: implement this
+		};
+
+		this.onRenewMemberShip = () => {
+			//TODO: implement this
 		};
 
 		this.appendMiningMessage = message => {

@@ -49,6 +49,14 @@ class MiningView extends _reflux2.default.Component {
 			}
 		};
 
+		this.handleClickBuy = () => {
+			_EreborActions2.default.buyMemberShip();
+		};
+
+		this.handleClickRenew = () => {
+			_EreborActions2.default.renewMemberShip();
+		};
+
 		this.__renderMiningMessages = () => {
 			return this.state.currentMiningMessages.map(message => {
 				return _react2.default.createElement(
@@ -75,7 +83,7 @@ class MiningView extends _reflux2.default.Component {
 					'label',
 					{ className: 'item TransferTo', style: { border: 'none' } },
 					'Addr:',
-					_react2.default.createElement('input', { size: 30, type: 'text', style: {
+					_react2.default.createElement('input', { size: 45, type: 'text', style: {
 							backgroundColor: "rgba(255,255,255,0)",
 							border: "1px solid white",
 							color: "white",
@@ -84,13 +92,21 @@ class MiningView extends _reflux2.default.Component {
 							fontFamily: "monospace",
 							textAlign: "center"
 						},
-						defaultValue: this.state.address, placeholder: 'Ethereum Address' })
+						value: this.state.address, placeholder: 'Ethereum Address' })
 				),
-				"MemberShip Status: " + this.state.memberShipStatus,
-				_react2.default.createElement('input', { type: 'button', className: 'button', style: { margin: "40px 0 0 40px", fontSize: "22px" },
-					value: this.state.memberShipStatus === "not member" ? "buy" : this.state.memberShipStatus === "expired" ? "renew" : this.state.mining ? "stop" : "start",
-					disabled: this.state.mining && !this.state.canQuit,
-					onClick: this.state.memberShipStatus === "not member" ? this.handleClickBuy : this.state.memberShipStatus === "expired" ? this.handleClickRenew : this.handleClickMining })
+				_react2.default.createElement(
+					'div',
+					{ className: 'item', style: { border: "none" } },
+					_react2.default.createElement('input', { type: 'button', className: 'button gamestart',
+						value: this.state.memberShipStatus === "not member" ? "buy" : this.state.memberShipStatus === "expired" ? "renew" : this.state.mining ? "stop" : "start",
+						disabled: this.state.mining && !this.state.canQuit,
+						onClick: this.state.memberShipStatus === "not member" ? this.handleClickBuy : this.state.memberShipStatus === "expired" ? this.handleClickRenew : this.handleClickMining })
+				),
+				_react2.default.createElement(
+					'div',
+					{ className: 'item', style: { border: "none", fontSize: "20px" } },
+					"MemberShip Status: " + this.state.memberShipStatus
+				)
 			);
 		};
 

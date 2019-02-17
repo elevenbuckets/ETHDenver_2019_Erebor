@@ -112,12 +112,14 @@ class EreborStore extends Reflux.Store {
 
 	linkAddress = (address) => {
 		this.erebor.address = address;
-		this.erebor.linkAccount(this.erebor.address);
-		this.setState({address: this.erebor.address});
-		this.erebor.myMemberStatus().then(data=>{
-			let memberShipStatus = data[0];
-			this.setState({ memberShipStatus });
+		this.erebor.linkAccount(this.erebor.address).then(()=>{
+			this.setState({address: this.erebor.userWallet});
+			this.erebor.myMemberStatus().then(data=>{
+				let memberShipStatus = data[0];
+				this.setState({ memberShipStatus });
+			});
 		});
+		
 		
 
 	}
