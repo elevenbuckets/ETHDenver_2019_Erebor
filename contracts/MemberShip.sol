@@ -127,7 +127,7 @@ contract MemberShip {
         // This contract may be updated while the token contract is not;
         // assume coreManager never transfer their first token (the _tickets)
         for (uint i=0; i<3; i++){
-            if (iELEM(ELEMAddr).balanceOf(coreManager[i]) == 0) {
+            if (iELEM(ELEMAddr).ownerOf(_tickets[i]) == coreManager[i]) {  // should be safe to ignore it for new deploys
                 memberDB[_tickets[i]] = MemberInfo(coreManager[i], block.number, 0, bytes32(0), "");
                 addressToId[coreManager[i]] = _tickets[i];
             }
@@ -136,6 +136,7 @@ contract MemberShip {
 
     // use "putNFTForSale()", "canTradeToken=true", "buyToken", and "transferToken" before the "trading"
     // contract and the corresponding state channel are implemented
+    // note: for "putNFTForSale" and "transferToken", one need to iELEM(ELEMAddr).approve(tokenId) first
     function putNFTForSale(uint _tokenId) public coreManagerOnly isNFTOwner(_tokenId) isNotSpecialToken(_tokenId) {
         iELEM(ELEMAddr).transferFrom(msg.sender, address(this), _tokenId);
     }
@@ -155,6 +156,7 @@ contract MemberShip {
         return true;
     }
 
+    // note: for "putNFTForSale" and "transferToken", one need to iELEM(ELEMAddr).approve(tokenId) first
     function transferToken(
         uint _tokenToTransfer,
         uint _tokenId,
