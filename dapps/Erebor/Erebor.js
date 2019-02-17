@@ -1012,8 +1012,9 @@ class Erebor extends BladeIronClient {
                 }
 
                 this.bindMemberShip = () => {
-                        return this.call('MemberShip')('tokenOfOwnerByIndex')(this.userWallet, 0).then( (token) => {
-                                return this.sendTk('MemberShip')('bindMembership')(token)();
+                        return this.call('Elemmire')('tokenOfOwnerByIndex')(this.userWallet, 0).then( (token) => {
+                                return this.sendTk('MemberShip')('bindMembership')(token)()
+					   .then((qid) => { return this.getReceipts(qid) })
                         });
                 }
 
