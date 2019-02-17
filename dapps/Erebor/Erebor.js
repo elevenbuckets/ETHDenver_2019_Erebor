@@ -1024,7 +1024,7 @@ class Erebor extends BladeIronClient {
                         let gem = {};
 
                         let types = 36;
-                        let stoneIdx = (tokenHex.substring(60,64) % types + 1);
+                        let stoneIdx = (parseInt(tokenHex.substring(60,64),16) % types + 1);
                         gem["type"] = stoneIdx < 10 ? 'stone0' + stoneIdx : 'stone' + stoneIdx;  // from stone01 to stone36
                         gem["strength"] = tokenHex.substring(56, 60) % types + 1;  // 16 levels, from 1 to 16
 
