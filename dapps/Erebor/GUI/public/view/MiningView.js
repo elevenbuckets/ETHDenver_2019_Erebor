@@ -49,6 +49,14 @@ class MiningView extends _reflux2.default.Component {
 			}
 		};
 
+		this.handleClickBuy = () => {
+			_EreborActions2.default.buyMemberShip();
+		};
+
+		this.handleClickRenew = () => {
+			_EreborActions2.default.renewMemberShip();
+		};
+
 		this.__renderMiningMessages = () => {
 			return this.state.currentMiningMessages.map(message => {
 				return _react2.default.createElement(

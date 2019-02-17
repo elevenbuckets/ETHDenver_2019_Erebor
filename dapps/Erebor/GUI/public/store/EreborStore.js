@@ -52,6 +52,14 @@ class EreborStore extends _reflux2.default.Store {
 			this.setState({ mining: false });
 		};
 
+		this.onBuyMemberShip = () => {
+			//TODO: implement this
+		};
+
+		this.onRenewMemberShip = () => {
+			//TODO: implement this
+		};
+
 		this.appendMiningMessage = message => {
 			if (this.state.currentMiningMessages.length >= 10) {
 				let messages = [...this.state.currentMiningMessages];
