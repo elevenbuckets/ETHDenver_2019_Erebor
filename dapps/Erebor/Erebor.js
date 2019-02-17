@@ -1023,6 +1023,7 @@ class Erebor extends BladeIronClient {
                 // gem related
                 this.getGemParams = (tokenHex) => {
                         if (tokenHex.substring(0, 2) === '0x') tokenHex = tokenHex.slice(2);
+                        if (tokenHex == '65535') tokenHex = '37ecec75cba14bd31a337e82f3022d91cfa205a338fe152ab72f03bc2c738d10'  // temporary fix
                         let gem = {};
 
                         let stoneIdx = (parseInt(tokenHex.substring(60,64),16) % 36 + 1);
