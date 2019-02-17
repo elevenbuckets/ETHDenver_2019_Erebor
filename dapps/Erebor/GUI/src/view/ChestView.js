@@ -61,7 +61,7 @@ class ChestView extends Reflux.Component {
 	__renderStoneTransfer = () => {
 		return (
 			this.state.stoneId === null ? <div>This is your trasure chest.</div>
-				: <div>Stone Meta: <br/> {Object.keys(JSON.parse(this.state.stoneId)).map((k)=>{ return `${k}: ${JSON.parse(this.state.stoneId)[k]}`<br/>})}</div>
+				: <div>Stone Meta: <br/> {Object.keys(JSON.parse(this.state.stoneId)).map((k)=>{ return `${k}: ${JSON.parse(this.state.stoneId)[k]}` + "<br/>"})}</div>
 		)
 	}
 
