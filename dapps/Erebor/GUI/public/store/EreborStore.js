@@ -29,10 +29,12 @@ class EreborStore extends _reflux2.default.Store {
 		super();
 
 		this.onStartMining = () => {
+			this.erebor.startTrial(200);
 			this.setState({ mining: true });
 		};
 
 		this.onStopMining = () => {
+			this.erebor.stopTrial();
 			this.setState({ mining: false });
 		};
 
@@ -59,71 +61,75 @@ class EreborStore extends _reflux2.default.Store {
 		this.erebor.client.subscribe('ethstats');
 
 		//Overwrite the function with pass the state
-		this.erebor.reactStateTrigger = state => {
+		this.reactStateTrigger = state => {
+			if (state.stateMsg) {
+				this.setState({ currentMiningMessages: [...this.state.currentMiningMessages, state.stateMsg] });
+			}
 			this.setState(state);
 		};
 
-		this.addressUpdate = () => {
-			if (this.state.lesDelay === true || this.state.address === null) return; // do nothing, since statusUpdate is doing it already
-			console.log(`DEBUG: address Update is called`);
-			this._count = 0;
-			this._target = this.state.tokenList.length + 1;
-			this._balances = { 'ETH': 0 };
-			this._tokenBalance = [];
+		this.erebor.setReactStateTrigger(this.reactStateTrigger);
 
-			if (this.erebor.userErebor == this.state.address) {
-				//loopasync(['ETH', ...this.state.tokenList], EreborActions.statusUpdate, 1);
-				['ETH', ...this.state.tokenList].map(t => {
-					_EreborActions2.default.statusUpdate(t);
-				});
-			} else if (typeof this.state.passManaged[this.state.address] === 'undefined') {
-				this.erebor.linkAccount(this.state.address).then(r => {
-					this.setState({ passManaged: { [this.state.address]: r.result } });
-					//loopasync(['ETH', ...this.state.tokenList], EreborActions.statusUpdate, 1);
-					['ETH', ...this.state.tokenList].map(t => {
-						_EreborActions2.default.statusUpdate(t);
-					});
-				}).catch(err => {
-					console.trace(err);
-					//this.setState({address: null});
-					//EreborActions.finishUpdate();
-				});
-			}
-		};
+		// this.addressUpdate = () => {
+		// 	if (this.state.lesDelay === true || this.state.address === null) return; // do nothing, since statusUpdate is doing it already
+		// 	console.log(`DEBUG: address Update is called`);
+		// 	this._count = 0;
+		// 	this._target = this.state.tokenList.length + 1;
+		// 	this._balances = { 'ETH': 0 };
+		// 	this._tokenBalance = [];
 
-		this.erebor.handleStats = stats => {
-			if (stats.connected === false) {
-				return this.setState({ connected: false });
-			} else if (stats.blockHeight === 0) {
-				return this.setState({ wait4peers: true, connected: true });
-			} else if (stats.blockHeight !== stats.highestBlock) {
-				return this.setState({ syncInProgress: true, connected: true, wait4peers: false });
-			} else {
-				this.setState(_extends({}, stats, { wait4peers: false, syncInProgress: false }));
-			}
+		// 	if (this.erebor.userErebor == this.state.address) {
+		// 		//loopasync(['ETH', ...this.state.tokenList], EreborActions.statusUpdate, 1);
+		// 		['ETH', ...this.state.tokenList].map((t) => { EreborActions.statusUpdate(t); })
+		// 	} else if (typeof (this.state.passManaged[this.state.address]) === 'undefined') {
+		// 		this.erebor.linkAccount(this.state.address)
+		// 			.then((r) => {
+		// 				this.setState({ passManaged: { [this.state.address]: r.result } });
+		// 				//loopasync(['ETH', ...this.state.tokenList], EreborActions.statusUpdate, 1);
+		// 				['ETH', ...this.state.tokenList].map((t) => { EreborActions.statusUpdate(t); })
+		// 			})
+		// 			.catch((err) => {
+		// 				console.trace(err);
+		// 				//this.setState({address: null});
+		// 				//EreborActions.finishUpdate();
+		// 			})
+		// 	}
+		// }
 
-			this.erebor.gasPriceEst().then(est => {
-				this.setState({ gasPriceInfo: est, gasPrice: est[this.state.gasPriceOption] });
-			});
-		};
+		// this.erebor.handleStats = (stats) => {
+		// 	if (stats.connected === false) {
+		// 		return this.setState({ connected: false });
+		// 	} else if (stats.blockHeight === 0) {
+		// 		return this.setState({ wait4peers: true, connected: true });
+		// 	} else if (stats.blockHeight !== stats.highestBlock) {
+		// 		return this.setState({ syncInProgress: true, connected: true, wait4peers: false });
+		// 	} else {
+		// 		this.setState({ ...stats, wait4peers: false, syncInProgress: false });
+		// 	}
 
-		this.erebor.client.on('ethstats', this.erebor.handleStats);
-		this.erebor.client.subscribe("synctokens");
+		// 	this.erebor.gasPriceEst().then((est) => {
+		// 		this.setState({ gasPriceInfo: est, gasPrice: est[this.state.gasPriceOption] });
+		// 	})
+		// }
 
-		this.syncTokens = () => {
-			console.log(`syncTokenHandler is called`);
-			_EreborActions2.default.watchedTokenUpdate();
-		};
+		// this.erebor.client.on('ethstats', this.erebor.handleStats);
+		// this.erebor.client.subscribe("synctokens");
 
-		this.erebor.client.on('synctokens', this.syncTokens);
+		// this.syncTokens = () => {
+		// 	console.log(`syncTokenHandler is called`)
+		// 	EreborActions.watchedTokenUpdate();
+		// }
+
+		// this.erebor.client.on('synctokens', this.syncTokens);
+		this.erebor.linkAccount(this.erebor.address);
 
 		this._count;
 		this._target;
 		this.retryTimer;
 
 		// Init
-		this.erebor.handleStats({});
-		this.syncTokens();
+		// this.erebor.handleStats({});
+		// this.syncTokens();
 	}
 
 	// Reflux Action responses
