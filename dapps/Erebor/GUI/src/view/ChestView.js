@@ -18,9 +18,10 @@ class ChestView extends Reflux.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			stoneCount: 0,
 			stoneId: null
 		}
+
+		this.storeKeys = [ 'stoneCount' ];
 		this.erebor = remote.getGlobal('erebor');
 	}
 
@@ -30,19 +31,26 @@ class ChestView extends Reflux.Component {
 
 	stoneInfo = (id) => { this.setState({stoneId: id})}
 
-	__renderStoneChest = () => {
-			let inner = [];
-			this.erebor.myTokens().then((p) => {
-				p.map((s) => {
-					console.log(`DEBUG: s is ${s}`) ;
-					let sti = this.erebor.getGemParams('0x' + s); console.dir(sti);
-					inner.push(<div className="stoneNFT"><img src={`assets/elemmire/${sti.type}.png`} 
-							onClick={this.stoneInfo.bind(this, sti.strength)}></img></div>);
-				})
-				this.setState({stoneCount: p.length});
+	componentWillUpdate = (nextProp, nextState) => {
+		if (nextState.stoneCount !== this.state.stoneCount) this.updateChest();
+	}
+
+	updateChest = () => {
+		let inner = [];
+		this.erebor.myTokens().then((p) => {
+			p.map((s) => {
+				//console.log(`DEBUG: s is ${s}`) ;
+				let sti = this.erebor.getGemParams('0x' + s);
+				inner.push(<div className="stoneNFT"><img src={`assets/elemmire/${sti.type}.png`} 
+						onClick={this.stoneInfo.bind(this, sti.strength)}></img></div>);
 			})
+			this.setState({ inner });
+		})
+	}
+
+	__renderStoneChest = () => {
 		return <div className="chestView">
-			{inner}
+			{this.state.inner}
 		</div>
 	}
 
@@ -57,9 +65,7 @@ class ChestView extends Reflux.Component {
 		console.log("In ChestView render()" + this.erebor.userWallet);
 		return (
 			<div className="chest">
-				<div className="chestView">
 					{this.__renderStoneChest()}
-				</div>
 				<div className="stoneTransfer">
 					{this.__renderStoneTransfer()}
 				</div>
