@@ -255,6 +255,13 @@ h6 {
   background-color: #34475cb5;
 }
 
+.gamestart {}
+
+.gamestart:hover {
+   background-color: gold;
+   color: white;
+}
+
 /* Each item in our grid will contain numbers */
 .item {
   /* We center the contents of these items. You can also do this with flexbox too! */
@@ -815,7 +822,6 @@ h6 {
   margin: 2px 1px;
   cursor: pointer;
   max-width: fit-content;
-  align-self: baseline;
 }
 
 .button:disabled {

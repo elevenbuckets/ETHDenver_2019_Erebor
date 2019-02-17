@@ -63,7 +63,7 @@ class MiningView extends Reflux.Component {
 		return <div className="gamerSetting">
 			<label className="item TransferTo" style={{ border: 'none' }}>
 				Addr:
-		<input size={30} type='text' style=
+		<input size={45} type='text' style=
 					{{
 						backgroundColor: "rgba(255,255,255,0)",
 						border: "1px solid white",
@@ -76,13 +76,14 @@ class MiningView extends Reflux.Component {
 					defaultValue={this.state.address} placeholder="Ethereum Address" />
 
 			</label>
-			{"MemberShip Status: " + this.state.memberShipStatus}
-			<input type="button" className="button" style={{ margin: "40px 0 0 40px", fontSize: "22px" }}
+			<div className="item" style={{border: "none"}}>
+			<input type="button" className="button gamestart" 
 				value={this.state.memberShipStatus === "not member" ? "buy" : this.state.memberShipStatus === "expired" ?
 					"renew" : this.state.mining ? "stop" : "start"}
 				disabled={this.state.mining && (!this.state.canQuit)}
 				onClick={this.state.memberShipStatus === "not member" ? this.handleClickBuy : this.state.memberShipStatus === "expired" ?
-					this.handleClickRenew : this.handleClickMining} />
+					this.handleClickRenew : this.handleClickMining} /></div>
+			 <div className="item" style={{border: "none", fontSize: "20px"}}>{"MemberShip Status: " + this.state.memberShipStatus}</div>
 		</div>
 	}
 
