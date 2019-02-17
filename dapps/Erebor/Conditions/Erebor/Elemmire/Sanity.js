@@ -40,6 +40,10 @@ module.exports =
         {
                 return true;
         },
+        Elemmire_approve_sanity(addr, jobObj)
+        {
+                return true;
+        },
 
 
 }
