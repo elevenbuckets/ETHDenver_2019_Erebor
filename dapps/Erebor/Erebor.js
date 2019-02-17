@@ -977,6 +977,15 @@ class Erebor extends BladeIronClient {
 	            })
 	        };
 
+                this.myTokensId = () => {
+	            return this.call('Elemmire')('balanceOf')(this.userWallet).then( (balance) => {
+	                let p = [...Array(parseInt(balance))].map((item, index) => {
+	                    return this.call('Elemmire')('tokenOfOwnerByIndex')(this.userWallet, index)
+	                });
+                        return Promise.all(p);
+	            })
+	        };
+
                 // membership related
                 this.myMemberStatus = () => {  // "status", "token (hex)", "since", "penalty"
                         return this.call('MemberShip')('getMemberInfo')(this.userWallet).then( (res) => {
@@ -984,6 +993,28 @@ class Erebor extends BladeIronClient {
                                 let statusDict = ["not member", "expired", "active"];
                                 return [statusDict[status], res[1], res[2], res[3]]  // "status", "toKenHex", "since", "penalty"
                         })
+                }
+
+                this.transferTokenTo = (idx, toAddr) => {
+                        return this.call('Elemmire')('tokenOfOwnerByIndex')(this.userWallet, idx).then( (tokenId) => {
+                                return this.sendTk(this.ctrName)('transferFrom')(this.userWallet, toAddr, tokenId)();
+                        })
+                }
+
+                this.transferTokenToMemberCtr = (idx) => {
+                        return this.call('Elemmire')('tokenOfOwnerByIndex')(this.userWallet, idx).then( (tokenId) => {
+                                return this.sendTk('Elemmire')('transferFrom')(this.userWallet, this.ctrAddrBook['MemberShip'], tokenId)();
+                        })
+                }
+
+                this.buyToken = () => {  // only if you have no token at all
+                        return this.sendTk('MemberShip')('buyToken')()(10000000000000000);
+                }
+
+                this.bindMemberShip = () => {
+                        return this.call('MemberShip')('tokenOfOwnerByIndex')('', 0).then( (token) => {
+                                return this.sendTk('MemberShip')('bindMembership')(token)();
+                        });
                 }
 
                 // gem related
