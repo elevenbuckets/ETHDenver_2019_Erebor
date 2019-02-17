@@ -57,7 +57,7 @@ class ChestView extends Reflux.Component {
 
 	__renderStoneTransfer = () => {
 		return (
-			this.state.stoneId === null ? <div>Welcome to Erebor</div>
+			this.state.stoneId === null ? <div>This is your trasure chest.</div>
 				: <div>Showing Stone of strength {this.state.stoneId}</div>
 		)
 	}

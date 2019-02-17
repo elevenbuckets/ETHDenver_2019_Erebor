@@ -25,7 +25,7 @@ class EreborStore extends Reflux.Store {
 				canQuit: true,
 				stateMsg: null,
 				result: null,
-				currentMiningMessages: ["Welcome to Erebor!"],
+				currentMiningMessages: ["Welcome To Erebor!"],
 				mining: false,
 				memberShipStatus: "not member",
 				stoneCount: 0
