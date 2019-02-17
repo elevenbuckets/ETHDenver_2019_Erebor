@@ -91,7 +91,7 @@ class EreborStore extends _reflux2.default.Store {
 			canQuit: true,
 			stateMsg: null,
 			result: null,
-			currentMiningMessages: ["Currently mining, the expected mined time is 10 min,", "Keep going"],
+			currentMiningMessages: ["Welcome To Erebor!"],
 			mining: false,
 			memberShipStatus: "not member",
 			stoneCount: 0
@@ -107,10 +107,12 @@ class EreborStore extends _reflux2.default.Store {
 				this.appendMiningMessage(state.stateMsg);
 			}
 			if (state.result) {
-				_reactToastify.toast.success(_react2.default.createElement(
+				(0, _reactToastify.toast)(_react2.default.createElement(
 					'div',
 					null,
-					'Congratulation! Just mined a token successfully'
+					'Congratulation! ',
+					_react2.default.createElement('br', null),
+					'You won 1 stone!'
 				));
 				this.erebor.myTokens().then(data => {
 					this.setState({ stoneCount: data.length });

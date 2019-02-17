@@ -68,7 +68,7 @@ class MainView extends Reflux.Component {
 				<div className="content">
 					{this.state.currentView === "Mining" ? <MiningView /> : <ChestView />}
 				</div>
-				<ToastContainer />
+				<ToastContainer style={{fontSize: "25px"}}/>
 			</div>
 
 		)

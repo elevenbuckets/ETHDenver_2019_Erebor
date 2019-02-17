@@ -53,8 +53,7 @@ class ChestView extends _reflux2.default.Component {
 			let inner = [];
 			this.erebor.myTokens().then(p => {
 				p.map(s => {
-					//console.log(`DEBUG: s is ${s}`) ;
-					let sti = this.erebor.getGemParams('0x' + s);
+					let sti = this.erebor.getGemParams(s);
 					inner.push(_react2.default.createElement(
 						'div',
 						{ className: 'stoneNFT' },
@@ -78,7 +77,7 @@ class ChestView extends _reflux2.default.Component {
 			return this.state.stoneId === null ? _react2.default.createElement(
 				'div',
 				null,
-				'Welcome to Erebor'
+				'This is your trasure chest.'
 			) : _react2.default.createElement(
 				'div',
 				null,
@@ -93,6 +92,8 @@ class ChestView extends _reflux2.default.Component {
 
 		this.storeKeys = ['stoneCount'];
 		this.erebor = _electron.remote.getGlobal('erebor');
+
+		this.updateChest();
 	}
 
 	render() {

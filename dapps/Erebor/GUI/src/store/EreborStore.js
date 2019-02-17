@@ -41,7 +41,7 @@ class EreborStore extends Reflux.Store {
 				this.appendMiningMessage(state.stateMsg);
 			}
 			if(state.result){
-				toast(<div>Congratulation! Just mined a token successfully</div>);
+				toast(<div>Congratulation! <br/>You won 1 stone!</div>);
 				this.erebor.myTokens().then(data=>{
 					this.setState({stoneCount: data.length});
 				})

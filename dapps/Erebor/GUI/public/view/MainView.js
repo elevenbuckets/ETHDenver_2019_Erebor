@@ -97,7 +97,7 @@ class MainView extends _reflux2.default.Component {
 				{ className: 'content' },
 				this.state.currentView === "Mining" ? _react2.default.createElement(_MiningView2.default, null) : _react2.default.createElement(_ChestView2.default, null)
 			),
-			_react2.default.createElement(_reactToastify.ToastContainer, null)
+			_react2.default.createElement(_reactToastify.ToastContainer, { style: { fontSize: "25px" } })
 		);
 	}
 }
