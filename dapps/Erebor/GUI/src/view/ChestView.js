@@ -21,7 +21,7 @@ class ChestView extends Reflux.Component {
 			stoneId: null
 		}
 
-		this.storeKeys = [ 'stoneCount' ];
+		this.storeKeys = ['stoneCount'];
 		this.erebor = remote.getGlobal('erebor');
 
 		this.updateChest();
@@ -31,9 +31,9 @@ class ChestView extends Reflux.Component {
 		this.props.updateView(view);
 	}
 
-	stoneInfo = (id) => { 
-		let data = JSON.stringify(id,0,2);
-		this.setState({stoneId: data})
+	stoneInfo = (id) => {
+		let data = JSON.stringify(id, 0, 2);
+		this.setState({ stoneId: data })
 	}
 
 	componentWillUpdate = (nextProp, nextState) => {
@@ -45,8 +45,8 @@ class ChestView extends Reflux.Component {
 		this.erebor.myTokens().then((p) => {
 			p.map((s) => {
 				let sti = this.erebor.getGemParams(s);
-				inner.push(<div className="stoneNFT"><img src={`assets/elemmire/${sti.type}.png`} 
-						onClick={this.stoneInfo.bind(this, {...sti, tokenId: '0x' + s})}></img></div>);
+				inner.push(<div className="stoneNFT"><img src={`assets/elemmire/${sti.type}.png`}
+					onClick={this.stoneInfo.bind(this, { ...sti, tokenId: '0x' + s })}></img></div>);
 			})
 			this.setState({ inner });
 		})
@@ -61,7 +61,9 @@ class ChestView extends Reflux.Component {
 	__renderStoneTransfer = () => {
 		return (
 			this.state.stoneId === null ? <div>This is your trasure chest.</div>
-				: <div>Stone Meta: <br/> {Object.keys(JSON.parse(this.state.stoneId)).map((k)=>{ return `${k}: ${JSON.parse(this.state.stoneId)[k]}` + "<br/>"})}</div>
+				: <div>Stone Meta: <br /> {Object.keys(JSON.parse(this.state.stoneId)).map((k) => { return `${k}: ${JSON.parse(this.state.stoneId)[k]}` + "<br/>" }).map((g) => {
+					<div>{g}</div>
+				})}</div>
 		)
 	}
 
@@ -69,7 +71,7 @@ class ChestView extends Reflux.Component {
 		console.log("In ChestView render()" + this.erebor.userWallet);
 		return (
 			<div className="chest">
-					{this.__renderStoneChest()}
+				{this.__renderStoneChest()}
 				<div className="stoneTransfer">
 					{this.__renderStoneTransfer()}
 				</div>
