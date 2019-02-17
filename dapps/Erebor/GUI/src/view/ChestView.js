@@ -23,6 +23,8 @@ class ChestView extends Reflux.Component {
 
 		this.storeKeys = [ 'stoneCount' ];
 		this.erebor = remote.getGlobal('erebor');
+
+		this.updateChest();
 	}
 
 	updateView = (view) => {
