@@ -4,8 +4,6 @@ Object.defineProperty(exports, "__esModule", {
 	value: true
 });
 
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
 var _reflux = require('reflux');
 
 var _reflux2 = _interopRequireDefault(_reflux);
@@ -38,6 +36,16 @@ class EreborStore extends _reflux2.default.Store {
 			this.setState({ mining: false });
 		};
 
+		this.appendMiningMessage = message => {
+			if (this.state.currentMiningMessages.length >= 10) {
+				let messages = [...this.state.currentMiningMessages];
+				messages = messages.slice(1, 10);
+				this.setState({ currentMiningMessages: [...messages, message] });
+			} else {
+				this.setState({ currentMiningMessages: [...this.state.currentMiningMessages, message] });
+			}
+		};
+
 		this.state = {
 			lesDelay: false,
 			blockHeight: null,
@@ -63,7 +71,7 @@ class EreborStore extends _reflux2.default.Store {
 		//Overwrite the function with pass the state
 		this.reactStateTrigger = state => {
 			if (state.stateMsg) {
-				this.setState({ currentMiningMessages: [...this.state.currentMiningMessages, state.stateMsg] });
+				this.appendMiningMessage(state.stateMsg);
 			}
 			this.setState(state);
 		};
@@ -134,74 +142,74 @@ class EreborStore extends _reflux2.default.Store {
 	}
 
 	// Reflux Action responses
-	onStartUpdate(address, canvas) {
-		console.log(`DEBUG: calling start Update Reflux Action......`);
+	// onStartUpdate(address, canvas) {
+	// 	console.log(`DEBUG: calling start Update Reflux Action......`);
 
-		clearTimeout(this.retryTimer);this.retryTimer = undefined;
+	// 	clearTimeout(this.retryTimer); this.retryTimer = undefined;
 
-		if (this.state.showingBlock != 0 && this.state.showingBlock < this.state.blockHeight) {
-			console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!retrying status update soon...");
-			this.setState({ address: address, lesDelay: true, tokenBalance: [], showingBlock: 0 }); // is this correct ???
-			(0, _Utils.createCanvasWithAddress)(canvas, this.state.address);
-			this.retryTimer = setTimeout(() => {
-				return _EreborActions2.default.startUpdate(address, canvas);
-			}, 997);
-			return;
-		}
+	// 	if (this.state.showingBlock != 0 && this.state.showingBlock < this.state.blockHeight) {
+	// 		console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!retrying status update soon...")
+	// 		this.setState({ address: address, lesDelay: true, tokenBalance: [], showingBlock: 0 }); // is this correct ???
+	// 		createCanvasWithAddress(canvas, this.state.address);
+	// 		this.retryTimer = setTimeout(() => { return EreborActions.startUpdate(address, canvas) }, 997);
+	// 		return
+	// 	}
 
-		this.setState({ showingBlock: this.state.blockHeight });
-		this._count = 0;
-		this._target = this.state.tokenList.length + 1;
-		this._balances = { 'ETH': 0 };
-		this._tokenBalance = [];
-		let stage = Promise.resolve();
+	// 	this.setState({ showingBlock: this.state.blockHeight });
+	// 	this._count = 0;
+	// 	this._target = this.state.tokenList.length + 1;
+	// 	this._balances = { 'ETH': 0 };
+	// 	this._tokenBalance = [];
+	// 	let stage = Promise.resolve();
 
-		stage = stage.then(() => {
-			this.setState({ address: address, lesDelay: true, tokenBalance: [] });
-			(0, _Utils.createCanvasWithAddress)(canvas, this.state.address);
-			return this.erebor.linkAccount(address); // define app specific 'userErebor' as class attribute if returns 'true'
-		});
+	// 	stage = stage.then(() => {
+	// 		this.setState({ address: address, lesDelay: true, tokenBalance: [] });
+	// 		createCanvasWithAddress(canvas, this.state.address);
+	// 		return this.erebor.linkAccount(address); // define app specific 'userErebor' as class attribute if returns 'true'
+	// 	})
 
-		stage = stage.then(r => {
-			this.setState({ passManaged: { [this.state.address]: r.result } });
-			(0, _loopasync2.default)(['ETH', ...this.state.tokenList], _EreborActions2.default.statusUpdate, 1);
-		}).catch(err => {
-			console.trace(err);
-			//this.setState({address: null});
-			//createCanvasWithAddress(canvas, '0x');
-			//EreborActions.finishUpdate();
-		});
-	}
+	// 	stage = stage.then((r) => {
+	// 		this.setState({ passManaged: { [this.state.address]: r.result } });
+	// 		loopasync(['ETH', ...this.state.tokenList], EreborActions.statusUpdate, 1);
+	// 	})
+	// 		.catch((err) => {
+	// 			console.trace(err);
+	// 			//this.setState({address: null});
+	// 			//createCanvasWithAddress(canvas, '0x');
+	// 			//EreborActions.finishUpdate();
+	// 		})
+	// }
 
-	onStatusUpdate(symbol) {
-		if (symbol != 'ETH') {
-			this.erebor.addrTokenBalance(symbol)(this.state.address).then(b => {
-				let b9 = Number(this.erebor.toEth(b, this.erebor.TokenInfo[symbol].decimals).toFixed(9));
-				if (b9 > 0) {
-					let stats = { [symbol]: b9 };
-					let a = [...this._tokenBalance, `${symbol}: ${b9}`];
-					this._balances = _extends({}, this._balances, stats);
-					this._tokenBalance = [...new Set(a)];
-				}
-				this._count++;
-				if (this._count == this._target) _EreborActions2.default.finishUpdate();
-			});
-		} else {
-			this.erebor.addrEtherBalance(this.state.address).then(b => {
-				let b9 = Number(this.erebor.toEth(b, 18).toFixed(9));
-				let stats = { [symbol]: b9 };
-				this._balances = _extends({}, this._balances, stats);
-				this._count++;
-				if (this._count == this._target) _EreborActions2.default.finishUpdate();
-			});
-		}
-	}
+	// onStatusUpdate(symbol) {
+	// 	if (symbol != 'ETH') {
+	// 		this.erebor.addrTokenBalance(symbol)(this.state.address).then((b) => {
+	// 			let b9 = Number(this.erebor.toEth(b, this.erebor.TokenInfo[symbol].decimals).toFixed(9));
+	// 			if (b9 > 0) {
+	// 				let stats = { [symbol]: b9 };
+	// 				let a = [...this._tokenBalance, `${symbol}: ${b9}`];
+	// 				this._balances = { ...this._balances, ...stats };
+	// 				this._tokenBalance = [...new Set(a)];
+	// 			}
+	// 			this._count++;
+	// 			if (this._count == this._target) EreborActions.finishUpdate();
+	// 		})
+	// 	} else {
+	// 		this.erebor.addrEtherBalance(this.state.address).then((b) => {
+	// 			let b9 = Number(this.erebor.toEth(b, 18).toFixed(9));
+	// 			let stats = { [symbol]: b9 };
+	// 			this._balances = { ...this._balances, ...stats };
+	// 			this._count++;
+	// 			if (this._count == this._target) EreborActions.finishUpdate();
+	// 		})
+	// 	}
 
-	onFinishUpdate() {
-		this.setState({ lesDelay: false, balances: this._balances, tokenBalance: this._tokenBalance, showingBlock: this.state.blockHeight });
-		this._balances = { 'ETH': 0 };
-		this._tokenBalance = [];
-	}
+	// }
+
+	// onFinishUpdate() {
+	// 	this.setState({ lesDelay: false, balances: this._balances, tokenBalance: this._tokenBalance, showingBlock: this.state.blockHeight });
+	// 	this._balances = { 'ETH': 0 };
+	// 	this._tokenBalance = [];
+	// }
 
 }
 

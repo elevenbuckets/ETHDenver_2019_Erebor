@@ -81,12 +81,12 @@ class MiningView extends _reflux2.default.Component {
 					'label',
 					{ className: 'item TransferTo', style: { border: 'none' } },
 					'Addr:',
-					_react2.default.createElement('input', { size: 40, type: 'text', style: {
+					_react2.default.createElement('input', { size: 30, type: 'text', style: {
 							backgroundColor: "rgba(255,255,255,0)",
 							border: "1px solid white",
 							color: "white",
 							fontWeight: "bold",
-							fontSize: "15px",
+							fontSize: "25px",
 							fontFamily: "monospace",
 							textAlign: "center"
 						},
