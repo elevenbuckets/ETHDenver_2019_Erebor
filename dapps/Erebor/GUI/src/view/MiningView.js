@@ -21,7 +21,7 @@ class MiningView extends Reflux.Component {
 		this.state = {
 			miningRole: "Gamer"
 		}
-		this.storeKeys = ["mining","currentMiningMessages","canQuit","address"];
+		this.storeKeys = ["mining", "currentMiningMessages", "canQuit", "address", "memberShipStatus"];
 	}
 
 	updateView = (view) => {
@@ -36,11 +36,11 @@ class MiningView extends Reflux.Component {
 		}
 	}
 
-	
+
 	__renderMiningMessages = () => {
 		return this.state.currentMiningMessages.map(message => {
 			return <div>
-				{"> " +  message}
+				{"> " + message}
 			</div>
 		})
 	}
@@ -65,9 +65,10 @@ class MiningView extends Reflux.Component {
 						fontFamily: "monospace",
 						textAlign: "center"
 					}}
-				 defaultValue={this.state.address} placeholder="Ethereum Address" />
+					defaultValue={this.state.address} placeholder="Ethereum Address" />
 
 			</label>
+			 {"MemberShip Status: " + this.state.memberShipStatus}
 			<input type="button" className="button" style={{ margin: "40px 0 0 40px", fontSize: "22px" }}
 				value={this.state.mining ? "stop" : "start"} disabled={this.state.mining && (!this.state.canQuit)} onClick={this.handleClickMining} />
 		</div>

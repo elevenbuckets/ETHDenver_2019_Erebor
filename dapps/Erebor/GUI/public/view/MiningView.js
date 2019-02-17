@@ -86,6 +86,7 @@ class MiningView extends _reflux2.default.Component {
 						},
 						defaultValue: this.state.address, placeholder: 'Ethereum Address' })
 				),
+				"MemberShip Status: " + this.state.memberShipStatus,
 				_react2.default.createElement('input', { type: 'button', className: 'button', style: { margin: "40px 0 0 40px", fontSize: "22px" },
 					value: this.state.mining ? "stop" : "start", disabled: this.state.mining && !this.state.canQuit, onClick: this.handleClickMining })
 			);
@@ -95,7 +96,7 @@ class MiningView extends _reflux2.default.Component {
 		this.state = {
 			miningRole: "Gamer"
 		};
-		this.storeKeys = ["mining", "currentMiningMessages", "canQuit", "address"];
+		this.storeKeys = ["mining", "currentMiningMessages", "canQuit", "address", "memberShipStatus"];
 	}
 
 	render() {

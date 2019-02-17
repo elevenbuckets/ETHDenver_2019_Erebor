@@ -58,10 +58,6 @@ class MainView extends Reflux.Component {
 		return ReactDOM.findDOMNode(this.refs.Accounts).firstChild;
 	}
 
-
-
-
-
 	render() {
 		console.log("In MainView render(); syncInProgress = " + this.state.syncInProgress);
 
