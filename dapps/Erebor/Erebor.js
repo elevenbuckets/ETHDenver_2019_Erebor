@@ -176,7 +176,9 @@ class Erebor extends BladeIronClient {
 											console.log(`MerkleRoot: ${mr}`);
 											console.log(`BlockData (IPFS): ${bd}`);
 											console.log(`ClaimHash: ${myClaimHash}`);
-											this.reactStateTrigger({stateMsg: `***** Congretulation!!! YOU WON!!! *****`})
+											let result = {myClaims: this.myClaims, myClaimHash};
+
+											this.reactStateTrigger({stateMsg: `***** Congretulation!!! YOU WON!!! *****`, result})
 
 											if (typeof(this.configs.gamerBot) !== undefined 
 											 && toBool(this.configs.gamerBot) === true
@@ -1023,14 +1025,13 @@ class Erebor extends BladeIronClient {
                         if (tokenHex.substring(0, 2) === '0x') tokenHex = tokenHex.slice(2);
                         let gem = {};
 
-                        let types = 36;
-                        let stoneIdx = (parseInt(tokenHex.substring(60,64),16) % types + 1);
+                        let stoneIdx = (parseInt(tokenHex.substring(60,64),16) % 36 + 1);
                         gem["type"] = stoneIdx < 10 ? 'stone0' + stoneIdx : 'stone' + stoneIdx;  // from stone01 to stone36
-                        gem["strength"] = tokenHex.substring(56, 60) % types + 1;  // 16 levels, from 1 to 16
+                        gem["strength"] = (parseInt(tokenHex.substring(56, 60),16)) % 16 + 1;  // 16 levels, from 1 to 16
 
                         let usages = ["raw", "sword", "axe", "shield", "helmet", "crown", "ring", "armor", "amulet", "bracelet"];
-                        gem["usage"] = usages[tokenHex.substring(52, 56) % usages.length];
-                        gem["colorHue"] = tokenHex.substring(48, 52) % 360;  // from 0 to 359
+                        gem["usage"] = usages[parseInt(tokenHex.substring(52, 56),16) % usages.length];
+                        gem["colorHue"] = parseInt(tokenHex.substring(48, 52),16) % 360;  // from 0 to 359
 
                         return gem;
                 }
