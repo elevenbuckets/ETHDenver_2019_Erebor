@@ -25,7 +25,7 @@ class EreborStore extends Reflux.Store {
 				canQuit: true,
 				stateMsg: null,
 				result: null,
-				currentMiningMessages: ["Currently mining, the expected mined time is 10 min,", "Keep going"],
+				currentMiningMessages: ["Welcome To Erebor!"],
 				mining: false,
 				memberShipStatus: "not member",
 				stoneCount: 0
