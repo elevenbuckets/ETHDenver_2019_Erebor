@@ -73,7 +73,7 @@ class MiningView extends Reflux.Component {
 						fontFamily: "monospace",
 						textAlign: "center"
 					}}
-					defaultValue={this.state.address} placeholder="Ethereum Address" />
+					value={this.state.address} placeholder="Ethereum Address" />
 
 			</label>
 			<div className="item" style={{border: "none"}}>
