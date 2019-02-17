@@ -95,7 +95,7 @@ class MainView extends _reflux2.default.Component {
 			_react2.default.createElement(
 				'div',
 				{ className: 'content' },
-				this.state.currentView === "Mining" ? _react2.default.createElement(_MiningView2.default, null) : this.state.currentView === "MemberShip" ? _react2.default.createElement(_MemberShipView2.default, null) : _react2.default.createElement(_ChestView2.default, null)
+				this.state.currentView === "Mining" ? _react2.default.createElement(_MiningView2.default, null) : _react2.default.createElement(_ChestView2.default, null)
 			),
 			_react2.default.createElement(_reactToastify.ToastContainer, null)
 		);

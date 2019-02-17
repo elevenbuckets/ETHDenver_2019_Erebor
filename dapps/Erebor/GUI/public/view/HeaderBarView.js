@@ -59,12 +59,6 @@ class HeaderBarView extends _reflux2.default.Component {
 			),
 			_react2.default.createElement(
 				'div',
-				{ className: 'memberTab', style: { color: this.props.currentView === 'MemberShip' ? '#ff4200' : 'white' },
-					onClick: this.updateView.bind(this, 'MemberShip') },
-				'MemberShip'
-			),
-			_react2.default.createElement(
-				'div',
 				{ className: 'chestTab', style: { color: this.props.currentView === 'Chest' ? '#ff4200' : 'white' },
 					onClick: this.updateView.bind(this, 'Chest') },
 				'Chest'

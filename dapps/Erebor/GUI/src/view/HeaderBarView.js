@@ -34,8 +34,6 @@ class HeaderBarView extends Reflux.Component {
 			
 			<div className="miningTab" style={{color: this.props.currentView === 'Mining' ? '#ff4200' : 'white'}}
 			   onClick={this.updateView.bind(this, 'Mining')}>Mining</div>
-			<div className="memberTab" style={{color: this.props.currentView === 'MemberShip' ? '#ff4200' : 'white'}}
-			   onClick={this.updateView.bind(this, 'MemberShip')}>MemberShip</div>
             		<div className="chestTab" style={{color: this.props.currentView === 'Chest' ? '#ff4200' : 'white'}} 
 			   onClick={this.updateView.bind(this, 'Chest')}>Chest</div>
 			</div>

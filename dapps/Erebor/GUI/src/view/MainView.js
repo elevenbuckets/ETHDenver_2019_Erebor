@@ -65,13 +65,12 @@ class MainView extends Reflux.Component {
 			<div className="wrapper">
 				<HeaderBarView currentView={this.state.currentView} updateView={this.updateState.bind(this, "currentView")} />
 
-			<div className="content">
-					{this.state.currentView === "Mining" ? <MiningView /> : this.state.currentView === "MemberShip" ? <MemberShipView /> :
-						<ChestView />}
+				<div className="content">
+					{this.state.currentView === "Mining" ? <MiningView /> : <ChestView />}
 				</div>
 				<ToastContainer />
 			</div>
-			
+
 		)
 
 	}
