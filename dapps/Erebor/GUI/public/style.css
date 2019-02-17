@@ -87,14 +87,14 @@ h6 {
 }
 
 .headerbar{
+  display: grid;
   grid-area: headerbar;
   min-width: 100vw;
   max-width: 100vw;
-  background-color:#34475c66;
-  grid-template-columns: 1fr 2fr  2fr  2fr;
+  background-color:#66666666;
+  grid-template-columns: 220px 220px 220px 1fr;
   grid-template-areas:
-   "headerLogo headerbarButton headerbarButton headerbarButton"
-
+   "miningTab memberTab chestTab space";
 }
 
 .content {
@@ -130,14 +130,9 @@ h6 {
 }
 
 .headerbarButton{
-  grid-area: headerbarButton;
   color: white;
-  /* background-color: #34475c66; */
-  float: left;
-  text-align: right;
-  font-size: 4vh;
-  padding: 0.5vw 20px 5px 0px;
-  margin: 1px 1px 1px 1px;
+  background-color: #eeeeee66;
+  font-size: 1.1em;
 }
 
 .headerbarButton:hover {
@@ -148,15 +143,45 @@ h6 {
 
 .headerLogo {
  grid-area: headerLogo;
- margin: 11px;
- padding-bottom: 7px;
- margin-left: 20vw;
- /* justify-content: left; */
- max-width: 10vw;
- width: 100%; 
- /* display: grid;
- grid-template-columns: 46px 1fr; */
- /* border-left: 2px solid rgba(255,255,255,0.4); */
+}
+
+.miningTab {
+  justify-self: center;
+  align-self: center;
+  grid-area: miningTab;
+  font-size: 3em;
+}
+
+.miningTab:hover {
+  color: #ff4200;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.memberTab { 
+  grid-area: memberTab; 
+  justify-self: center;
+  align-self: center;
+  font-size: 3em;
+}
+
+.memberTab:hover {
+  color: #ff4200;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.chestTab { 
+  grid-area: chestTab; 
+  justify-self: center;
+  align-self: center;
+  font-size: 3em;
+}
+
+.chestTab:hover {
+  color: #ff4200;
+  cursor: pointer;
+  font-weight: bold;
 }
 
 .mining {
@@ -183,23 +208,36 @@ h6 {
 .chest {
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: 2fr 1fr;
+  grid-template-rows: 200px 1fr;
   grid-template-areas:
 	"chestView"
         "stoneTransfer";
   color: white;
   font-size: 20pt
 }
+
 .chestView {
   grid-area: chestView;
   display: grid;
-  grid-template-columns: 400px;
-  grid-gaps: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   overflow-x: scroll;
-  overflow-y: hidden;
 }
+
 .stoneTransfer {
   grid-area: stoneTransfer;
+  background-color: #00000066;
+  height: 100%;
+}
+
+.stoneNFT {
+  display: inline-block;
+  max-width: 300px;
+  margin: 30px;
+}
+
+.stoneNFT img {
+  width: 145px;
+  border: 4px solid #ffffff88;
 }
 
 /* Each item in our grid will contain numbers */
