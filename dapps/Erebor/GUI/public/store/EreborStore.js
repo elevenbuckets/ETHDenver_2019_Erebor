@@ -54,7 +54,13 @@ class EreborStore extends _reflux2.default.Store {
 		};
 
 		this.onBuyMemberShip = () => {
-			//TODO: implement this
+			this.erebor.buyToken().then(() => {
+				return this.erebor.bindMemberShip();
+			}).then(() => {
+				return this.linkAddress(this.erebor.userWallet);
+			}).catch(error => {
+				console.log(error);
+			});
 		};
 
 		this.onRenewMemberShip = () => {
@@ -87,7 +93,8 @@ class EreborStore extends _reflux2.default.Store {
 			result: null,
 			currentMiningMessages: ["Currently mining, the expected mined time is 10 min,", "Keep going"],
 			mining: false,
-			memberShipStatus: "not member"
+			memberShipStatus: "not member",
+			stoneCount: 0
 		};
 
 		this.listenables = _EreborActions2.default;
@@ -105,6 +112,9 @@ class EreborStore extends _reflux2.default.Store {
 					null,
 					'Congratulation! Just mined a token successfully'
 				));
+				this.erebor.myTokens().then(data => {
+					this.setState({ stoneCount: data.length });
+				});
 			}
 			this.setState(state);
 		};

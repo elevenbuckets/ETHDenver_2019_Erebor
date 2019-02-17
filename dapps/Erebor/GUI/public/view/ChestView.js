@@ -26,11 +26,13 @@ var _EreborActions = require('../action/EreborActions');
 
 var _EreborActions2 = _interopRequireDefault(_EreborActions);
 
+var _electron = require('electron');
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 // Views
 
-// Reflux store
+// Reflux actions
 class ChestView extends _reflux2.default.Component {
 	constructor(props) {
 		super(props);
@@ -43,35 +45,32 @@ class ChestView extends _reflux2.default.Component {
 			this.setState({ stoneId: id });
 		};
 
+		this.componentWillUpdate = (nextProp, nextState) => {
+			if (nextState.stoneCount !== this.state.stoneCount) this.updateChest();
+		};
+
+		this.updateChest = () => {
+			let inner = [];
+			this.erebor.myTokens().then(p => {
+				p.map(s => {
+					//console.log(`DEBUG: s is ${s}`) ;
+					let sti = this.erebor.getGemParams('0x' + s);
+					inner.push(_react2.default.createElement(
+						'div',
+						{ className: 'stoneNFT' },
+						_react2.default.createElement('img', { src: `assets/elemmire/${sti.type}.png`,
+							onClick: this.stoneInfo.bind(this, sti.strength) })
+					));
+				});
+				this.setState({ inner });
+			});
+		};
+
 		this.__renderStoneChest = () => {
 			return _react2.default.createElement(
 				'div',
 				{ className: 'chestView' },
-				_react2.default.createElement(
-					'div',
-					{ className: 'stoneNFT' },
-					_react2.default.createElement('img', { src: 'assets/elemmire/stone01.png', onClick: this.stoneInfo.bind(this, 1) })
-				),
-				_react2.default.createElement(
-					'div',
-					{ className: 'stoneNFT' },
-					_react2.default.createElement('img', { src: 'assets/elemmire/stone02.png', onClick: this.stoneInfo.bind(this, 2) })
-				),
-				_react2.default.createElement(
-					'div',
-					{ className: 'stoneNFT' },
-					_react2.default.createElement('img', { src: 'assets/elemmire/stone03.png', onClick: this.stoneInfo.bind(this, 3) })
-				),
-				_react2.default.createElement(
-					'div',
-					{ className: 'stoneNFT' },
-					_react2.default.createElement('img', { src: 'assets/elemmire/stone14.png', onClick: this.stoneInfo.bind(this, 14) })
-				),
-				_react2.default.createElement(
-					'div',
-					{ className: 'stoneNFT' },
-					_react2.default.createElement('img', { src: 'assets/elemmire/stone15.png', onClick: this.stoneInfo.bind(this, 15) })
-				)
+				this.state.inner
 			);
 		};
 
@@ -83,7 +82,7 @@ class ChestView extends _reflux2.default.Component {
 			) : _react2.default.createElement(
 				'div',
 				null,
-				'Showing Stone Info for stone ',
+				'Showing Stone of strength ',
 				this.state.stoneId
 			);
 		};
@@ -91,10 +90,13 @@ class ChestView extends _reflux2.default.Component {
 		this.state = {
 			stoneId: null
 		};
+
+		this.storeKeys = ['stoneCount'];
+		this.erebor = _electron.remote.getGlobal('erebor');
 	}
 
 	render() {
-		//console.log("In MainView render()");
+		console.log("In ChestView render()" + this.erebor.userWallet);
 		return _react2.default.createElement(
 			'div',
 			{ className: 'chest' },
@@ -108,5 +110,5 @@ class ChestView extends _reflux2.default.Component {
 	}
 }
 
-// Reflux actions
+// Reflux store
 exports.default = ChestView;

@@ -27,7 +27,8 @@ class EreborStore extends Reflux.Store {
 				result: null,
 				currentMiningMessages: ["Currently mining, the expected mined time is 10 min,", "Keep going"],
 				mining: false,
-				memberShipStatus: "not member"
+				memberShipStatus: "not member",
+				stoneCount: 0
 			}
 
 		this.listenables = EreborActions;
@@ -41,7 +42,9 @@ class EreborStore extends Reflux.Store {
 			}
 			if(state.result){
 				toast.success(<div>Congratulation! Just mined a token successfully</div>);
-
+				this.erebor.myTokens().then(data=>{
+					this.setState({stoneCount: data.length});
+				})
 			}
 			this.setState(state);
 		}
@@ -204,7 +207,13 @@ class EreborStore extends Reflux.Store {
 		this.setState({ mining: false });
 	}
 	onBuyMemberShip = () => {
-		//TODO: implement this
+		this.erebor.buyToken().then(()=>{
+			return this.erebor.bindMemberShip()
+		}).then(()=>{
+			return this.linkAddress(this.erebor.userWallet);
+		}).catch((error)=>{
+			console.log(error);
+		})
 	}
 
 	onRenewMemberShip = () => {
