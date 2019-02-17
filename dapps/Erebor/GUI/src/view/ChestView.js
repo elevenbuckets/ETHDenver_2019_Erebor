@@ -31,7 +31,10 @@ class ChestView extends Reflux.Component {
 		this.props.updateView(view);
 	}
 
-	stoneInfo = (id) => { this.setState({stoneId: id})}
+	stoneInfo = (id) => { 
+		let data = JSON.stringify(id,0,2);
+		this.setState({stoneId: data})
+	}
 
 	componentWillUpdate = (nextProp, nextState) => {
 		if (nextState.stoneCount !== this.state.stoneCount) this.updateChest();
@@ -43,7 +46,7 @@ class ChestView extends Reflux.Component {
 			p.map((s) => {
 				let sti = this.erebor.getGemParams(s);
 				inner.push(<div className="stoneNFT"><img src={`assets/elemmire/${sti.type}.png`} 
-						onClick={this.stoneInfo.bind(this, sti.strength)}></img></div>);
+						onClick={this.stoneInfo.bind(this, {...sti, tokenId: '0x' + s})}></img></div>);
 			})
 			this.setState({ inner });
 		})
@@ -58,7 +61,7 @@ class ChestView extends Reflux.Component {
 	__renderStoneTransfer = () => {
 		return (
 			this.state.stoneId === null ? <div>This is your trasure chest.</div>
-				: <div>Showing Stone of strength {this.state.stoneId}</div>
+				: <div>Stone Meta: <br/> {Object.keys(this.state.stoneId).map((k)=>{ return `${k}: ${this.state.stoneId[k]}`})}</div>
 		)
 	}
 
