@@ -36,6 +36,14 @@ class MiningView extends Reflux.Component {
 		}
 	}
 
+	handleClickBuy = () => {
+			EreborActions.buyMemberShip();
+	}
+
+	handleClickRenew = () => {
+		EreborActions.renewMemberShip();
+	}
+
 
 	__renderMiningMessages = () => {
 		return this.state.currentMiningMessages.map(message => {
@@ -68,9 +76,13 @@ class MiningView extends Reflux.Component {
 					defaultValue={this.state.address} placeholder="Ethereum Address" />
 
 			</label>
-			 {"MemberShip Status: " + this.state.memberShipStatus}
+			{"MemberShip Status: " + this.state.memberShipStatus}
 			<input type="button" className="button" style={{ margin: "40px 0 0 40px", fontSize: "22px" }}
-				value={this.state.mining ? "stop" : "start"} disabled={this.state.mining && (!this.state.canQuit)} onClick={this.handleClickMining} />
+				value={this.state.memberShipStatus === "not member" ? "buy" : this.state.memberShipStatus === "expired" ?
+					"renew" : this.state.mining ? "stop" : "start"}
+				disabled={this.state.mining && (!this.state.canQuit)}
+				onClick={this.state.memberShipStatus === "not member" ? this.handleClickBuy : this.state.memberShipStatus === "expired" ?
+					this.handleClickRenew : this.handleClickMining} />
 		</div>
 	}
 

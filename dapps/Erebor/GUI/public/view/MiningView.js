@@ -88,7 +88,9 @@ class MiningView extends _reflux2.default.Component {
 				),
 				"MemberShip Status: " + this.state.memberShipStatus,
 				_react2.default.createElement('input', { type: 'button', className: 'button', style: { margin: "40px 0 0 40px", fontSize: "22px" },
-					value: this.state.mining ? "stop" : "start", disabled: this.state.mining && !this.state.canQuit, onClick: this.handleClickMining })
+					value: this.state.memberShipStatus === "not member" ? "buy" : this.state.memberShipStatus === "expired" ? "renew" : this.state.mining ? "stop" : "start",
+					disabled: this.state.mining && !this.state.canQuit,
+					onClick: this.state.memberShipStatus === "not member" ? this.handleClickBuy : this.state.memberShipStatus === "expired" ? this.handleClickRenew : this.handleClickMining })
 			);
 		};
 
