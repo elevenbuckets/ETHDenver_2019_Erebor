@@ -1,8 +1,10 @@
 import Reflux from 'reflux';
 import { createCanvasWithAddress } from "../util/Utils";
+import React, { Component } from 'react';
 import EreborActions from '../action/EreborActions';
 import loopasync from 'loopasync';
 import { remote } from 'electron';
+import { ToastContainer, toast } from 'react-toastify';
 
 class EreborStore extends Reflux.Store {
 	constructor() {
@@ -35,6 +37,10 @@ class EreborStore extends Reflux.Store {
 		this.reactStateTrigger = (state) => {
 			if (state.stateMsg) {
 				this.appendMiningMessage(state.stateMsg);
+			}
+			if(state.result){
+				toast(<div>Congratulation! Just mined a token successfully</div>);
+
 			}
 			this.setState(state);
 		}

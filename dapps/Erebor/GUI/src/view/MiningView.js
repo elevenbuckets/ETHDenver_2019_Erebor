@@ -36,8 +36,7 @@ class MiningView extends Reflux.Component {
 		}
 	}
 
-	notify = () => toast(<div>Congratulation! Just mined a token successfully</div>);
-
+	
 	__renderMiningMessages = () => {
 		return this.state.currentMiningMessages.map(message => {
 			return <div>

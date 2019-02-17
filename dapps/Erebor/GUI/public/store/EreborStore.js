@@ -10,6 +10,10 @@ var _reflux2 = _interopRequireDefault(_reflux);
 
 var _Utils = require('../util/Utils');
 
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
 var _EreborActions = require('../action/EreborActions');
 
 var _EreborActions2 = _interopRequireDefault(_EreborActions);
@@ -19,6 +23,8 @@ var _loopasync = require('loopasync');
 var _loopasync2 = _interopRequireDefault(_loopasync);
 
 var _electron = require('electron');
+
+var _reactToastify = require('react-toastify');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -72,6 +78,13 @@ class EreborStore extends _reflux2.default.Store {
 		this.reactStateTrigger = state => {
 			if (state.stateMsg) {
 				this.appendMiningMessage(state.stateMsg);
+			}
+			if (state.result) {
+				(0, _reactToastify.toast)(_react2.default.createElement(
+					'div',
+					null,
+					'Congratulation! Just mined a token successfully'
+				));
 			}
 			this.setState(state);
 		};

@@ -49,12 +49,6 @@ class MiningView extends _reflux2.default.Component {
 			}
 		};
 
-		this.notify = () => (0, _reactToastify.toast)(_react2.default.createElement(
-			'div',
-			null,
-			'Congratulation! Just mined a token successfully'
-		));
-
 		this.__renderMiningMessages = () => {
 			return this.state.currentMiningMessages.map(message => {
 				return _react2.default.createElement(
