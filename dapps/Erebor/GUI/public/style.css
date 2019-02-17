@@ -186,23 +186,29 @@ h6 {
 
 .mining {
   display: grid;
-  grid-template-columns: 50vw 50vw;
+  grid-template-columns: 1fr;
+  grid-gap: 10px;
+  grid-template-rows: 1fr 250px;
+  height: 100vh;
   grid-template-areas:
-   "miningMessages miningSettings";
+   "miningMessages" 
+   "miningSettings";
  
   color: white;
   font-size: 20pt
  }
+
 .miningMessages{
   grid-area: miningMessages;
   margin: 20px;
   max-height: 80vh;
+  color: white;
 }
 
 .miningSettings{
   grid-area: miningSettings;
-  margin: 20px;
-  max-height: 60vh;
+  padding: 40px;
+
 }
 
 .chest {
@@ -219,7 +225,7 @@ h6 {
 .chestView {
   grid-area: chestView;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
   overflow-x: scroll;
 }
 
@@ -232,12 +238,28 @@ h6 {
 .stoneNFT {
   display: inline-block;
   max-width: 300px;
-  margin: 30px;
+  justify-self: center;
+  align-self: center;
 }
 
 .stoneNFT img {
   width: 145px;
   border: 4px solid #ffffff88;
+}
+
+.gamerSetting {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  grid-template-rows: 2fr 1fr;
+  max-height: 30vh;
+  background-color: #34475cb5;
+}
+
+.gamestart {}
+
+.gamestart:hover {
+   background-color: gold;
+   color: white;
 }
 
 /* Each item in our grid will contain numbers */
@@ -295,7 +317,8 @@ h6 {
   width: 100%;
   height: 100%;
   font-size: 24px;
-  grid-area: TransferTo;
+ /* background-color: #34475cb5; */
+  padding: 20px;
 }
 
 .ToAvatar {
@@ -789,9 +812,9 @@ h6 {
 /* default button style */
 .button {
   background-color: rgba(0, 0, 0, 0);
-  border: 2px solid grey;
-  color: #34475c;
-  padding: 2px 4px;
+  border: 2px solid gold;
+  color: gold;
+  padding: 2px 16px 2px 16px;
   text-align: center;
   text-decoration: none;
   display: inline-block;

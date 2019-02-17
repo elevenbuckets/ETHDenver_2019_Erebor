@@ -21,7 +21,7 @@ class MiningView extends Reflux.Component {
 		this.state = {
 			miningRole: "Gamer"
 		}
-		this.storeKeys = ["mining","currentMiningMessages","canQuit","address"];
+		this.storeKeys = ["mining", "currentMiningMessages", "canQuit", "address", "memberShipStatus"];
 	}
 
 	updateView = (view) => {
@@ -36,12 +36,19 @@ class MiningView extends Reflux.Component {
 		}
 	}
 
-	notify = () => toast(<div>Congratulation! Just mined a token successfully</div>);
+	handleClickBuy = () => {
+			EreborActions.buyMemberShip();
+	}
+
+	handleClickRenew = () => {
+		EreborActions.renewMemberShip();
+	}
+
 
 	__renderMiningMessages = () => {
 		return this.state.currentMiningMessages.map(message => {
 			return <div>
-				{"> " +  message}
+				{"> " + message}
 			</div>
 		})
 	}
@@ -56,7 +63,7 @@ class MiningView extends Reflux.Component {
 		return <div className="gamerSetting">
 			<label className="item TransferTo" style={{ border: 'none' }}>
 				Addr:
-		<input size={30} type='text' style=
+		<input size={45} type='text' style=
 					{{
 						backgroundColor: "rgba(255,255,255,0)",
 						border: "1px solid white",
@@ -66,11 +73,17 @@ class MiningView extends Reflux.Component {
 						fontFamily: "monospace",
 						textAlign: "center"
 					}}
-				 defaultValue={this.state.address} placeholder="Ethereum Address" />
+					defaultValue={this.state.address} placeholder="Ethereum Address" />
 
 			</label>
-			<input type="button" className="button" style={{ margin: "40px 0 0 40px", fontSize: "22px" }}
-				value={this.state.mining ? "stop" : "start"} disabled={this.state.mining && (!this.state.canQuit)} onClick={this.handleClickMining} />
+			<div className="item" style={{border: "none"}}>
+			<input type="button" className="button gamestart" 
+				value={this.state.memberShipStatus === "not member" ? "buy" : this.state.memberShipStatus === "expired" ?
+					"renew" : this.state.mining ? "stop" : "start"}
+				disabled={this.state.mining && (!this.state.canQuit)}
+				onClick={this.state.memberShipStatus === "not member" ? this.handleClickBuy : this.state.memberShipStatus === "expired" ?
+					this.handleClickRenew : this.handleClickMining} /></div>
+			 <div className="item" style={{border: "none", fontSize: "20px"}}>{"MemberShip Status: " + this.state.memberShipStatus}</div>
 		</div>
 	}
 
