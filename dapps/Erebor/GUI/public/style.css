@@ -92,9 +92,9 @@ h6 {
   min-width: 100vw;
   max-width: 100vw;
   background-color:#66666666;
-  grid-template-columns: 220px 220px 220px 1fr;
+  grid-template-columns: 150px 150px 1fr;
   grid-template-areas:
-   "miningTab memberTab chestTab space";
+   "miningTab chestTab space";
 }
 
 .content {
