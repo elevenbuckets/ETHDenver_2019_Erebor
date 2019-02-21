@@ -271,8 +271,10 @@ class Erebor extends BladeIronClient {
 			) {
 				this.stopTrial();
 				this.ipfs_pubsub_unsubscribe(this.channelACK);
-			        if (this.results[this.initHeight].length > 0) {
-					console.log(`Address ${this.userWallet} won ${this.results[this.initHeight].length} times! Awaiting Merkle root to withdraw prize...`);
+				let realWin = this.results[this.initHeight].filter((i)=> {return i.sent === true}).length;
+
+			        if (realWin > 0) {
+					console.log(`Address ${this.userWallet} won ${realWin} times! Awaiting Merkle root to withdraw prize...`);
 					this.client.subscribe('ethstats');
 					this.client.on('ethstats', this.checkMerkle);
 				} else {
