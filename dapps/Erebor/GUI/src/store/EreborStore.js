@@ -207,8 +207,12 @@ class EreborStore extends Reflux.Store {
 		this.setState({ mining: false });
 	}
 	onBuyMemberShip = () => {
-		this.erebor.buyToken().then(()=>{
-			return this.erebor.bindMemberShip()
+		this.erebor.buyToken().then((QID)=>{
+                        return this.erebor.getReceipts(QID);
+                }).then((rc)=>{
+                        if (rc[0].status === '0x1') {
+                            return this.erebor.bindMemberShip();
+                        }
 		}).then(()=>{
 			return this.linkAddress(this.erebor.userWallet);
 		}).catch((error)=>{
