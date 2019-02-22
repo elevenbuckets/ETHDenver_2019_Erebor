@@ -21,7 +21,8 @@ class ChestView extends Reflux.Component {
 			stoneId: null
 		}
 
-		this.storeKeys = ['stoneCount'];
+		this.store = EreborStore;
+		this.storeKeys = ['stoneCount', 'memberShipId'];
 		this.erebor = remote.getGlobal('erebor');
 
 		this.updateChest();
@@ -37,7 +38,7 @@ class ChestView extends Reflux.Component {
 	}
 
 	componentWillUpdate = (nextProp, nextState) => {
-		if (nextState.stoneCount !== this.state.stoneCount) this.updateChest();
+		if (nextState.stoneCount !== this.state.stoneCount || nextState.memberShipId !== this.state.memberShipId) this.updateChest();
 	}
 
 	updateChest = () => {
@@ -45,7 +46,9 @@ class ChestView extends Reflux.Component {
 		this.erebor.myTokens().then((p) => {
 			p.map((s) => {
 				let sti = this.erebor.getGemParams(s);
-				inner.push(<div className="stoneNFT"><img src={`assets/elemmire/${sti.type}.png`}
+				if ('0x' + s === this.state.memberShipId) sti['memberId'] = true;
+				inner.push(<div className="stoneNFT"><img src={`assets/elemmire/${sti.type}.png`} 
+					style={'0x' + s === this.state.memberShipId ? {border: '4px solid gold'} : {}}
 					onClick={this.stoneInfo.bind(this, { ...sti, tokenId: '0x' + s })}></img></div>);
 			})
 			this.setState({ inner });
@@ -68,7 +71,7 @@ class ChestView extends Reflux.Component {
 	}
 
 	render() {
-		console.log("In ChestView render()" + this.erebor.userWallet);
+		console.log("In ChestView render()" + this.state.memberShipId);
 		return (
 			<div className="chest">
 				{this.__renderStoneChest()}

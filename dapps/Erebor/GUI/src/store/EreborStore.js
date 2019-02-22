@@ -28,6 +28,7 @@ class EreborStore extends Reflux.Store {
 				currentMiningMessages: ["Welcome To Erebor!", "Please press start to begin!!"],
 				mining: false,
 				memberShipStatus: "not member",
+				memberShipId: "0x",
 				stoneCount: 0
 			}
 
@@ -119,7 +120,8 @@ class EreborStore extends Reflux.Store {
 			this.setState({address: this.erebor.userWallet});
 			this.erebor.myMemberStatus().then(data=>{
 				let memberShipStatus = data[0];
-				this.setState({ memberShipStatus });
+				let memberShipId     = data[1];
+				this.setState({ memberShipStatus, memberShipId });
 			});
 		});
 		
