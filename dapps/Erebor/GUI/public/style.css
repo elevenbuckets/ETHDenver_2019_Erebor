@@ -215,7 +215,7 @@ h6 {
 .chest {
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: 200px 1fr;
+  grid-template-rows: 170px 1fr;
   grid-template-areas:
 	"chestView"
         "stoneTransfer";
@@ -226,7 +226,9 @@ h6 {
 .chestView {
   grid-area: chestView;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
+  grid-template-columns: repeat(auto-fit, 160px);
+  grid-template-rows: 160px;
+  margin: 5px;
   overflow-x: scroll;
 }
 
