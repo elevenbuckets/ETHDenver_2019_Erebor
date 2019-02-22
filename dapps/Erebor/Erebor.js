@@ -1039,6 +1039,33 @@ class Erebor extends BladeIronClient {
                         return gem;
                 }
 
+                // test: generate random numbers base on our rules
+                this.makeRandomNumber = (n) => {
+	                if (typeof(n) === 'undefined') n = 270;
+
+			let board = ethUtils.bufferToHex(ethUtils.sha256(String(Math.random()) + 'ElevenBuckets'));
+                        return this.client.call('getBlock', []).then((rc) => {
+                                // let blockHeight = rc.number;
+                                let p = [...Array(n)].map((x, i) => {
+                                        return this.client.call('getBlock', [rc.number - 1 - i]).then((rc) => {
+                                                let blockhash = rc.hash;
+                                                let packed = this.abi.encodeParameters(
+                                                [
+                                                        'bytes32',
+                                                        'bytes32',
+                                                ],
+                                                [
+                                                        board,
+                                                        blockhash
+                                                ])
+                                                // calculating tickets
+                                                return ethUtils.bufferToHex(ethUtils.keccak256(packed));
+                                        });
+                                });
+                                return Promise.all(p);
+                        })
+                }
+
                 // account balance related
 		this.addrEtherBalance = (address) => 
 		{

@@ -1,10 +1,10 @@
 {
-  "name": "11be-wallet-app",
+  "name": "11be-erebor-app",
   "version": "1.0.0",
   "main": "main.js",
   "author": "Jason Lin",
   "license": "GPL-3.0",
-  "description": "Electron-based Wallet App for 11BE",
+  "description": "Electron-based Erebor App for 11BE",
   "babel": {
     "plugins": [
       "transform-class-properties",
