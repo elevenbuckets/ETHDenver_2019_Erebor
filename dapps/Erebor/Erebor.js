@@ -1040,14 +1040,16 @@ class Erebor extends BladeIronClient {
                 }
 
                 // test: generate random numbers base on our rules
-                this.makeRandomNumber = (n) => {
-	                if (typeof(n) === 'undefined') n = 270;
+                this.makeRandomNumber = (gameHeightBeforeNow) => {
+                        if (gameHeightBeforeNow < 20) gameHeightBeforeNow = 20;
+	                let gamePeriod = 20;
 
-			let board = ethUtils.bufferToHex(ethUtils.sha256(String(Math.random()) + 'ElevenBuckets'));
                         return this.client.call('getBlock', []).then((rc) => {
-                                // let blockHeight = rc.number;
-                                let p = [...Array(n)].map((x, i) => {
-                                        return this.client.call('getBlock', [rc.number - 1 - i]).then((rc) => {
+                                // assume a game is 20 blocks long and generate 20 random number, these 20 random
+                                // numbers are base on same "board" and these 20 blockhashes
+                                let p = [...Array(gamePeriod)].map((x, i) => {
+                                        return this.client.call('getBlock', [rc.number - 1 - gameHeightBeforeNow]).then((rc) => {
+			                        let board = ethUtils.bufferToHex(ethUtils.sha256(String(Math.random()) + 'ElevenBuckets'));
                                                 let blockhash = rc.hash;
                                                 let packed = this.abi.encodeParameters(
                                                 [
@@ -1064,6 +1066,21 @@ class Erebor extends BladeIronClient {
                                 });
                                 return Promise.all(p);
                         })
+                }
+
+                this.makeMoreRandomNumber = (numberOfGames) => {
+                        if (typeof(numberOfGames) === 'undefined' ) numberOfGames = 3;
+                        // assume game period is 20, as used in this.makeRandomNumber()
+                        let res = [];
+                        let p = [...Array(numberOfGames)].map((x, i) => {
+                                return this.makeRandomNumber(20*(i+1)).then( (rc)=> {
+                                        res = [ ...res, ...rc];
+                                        if (res.length % 500 === 0) console.log(res.length);
+                                })
+                        })
+                        return Promise.all(p).then((rc)=> {
+                                fs.writeFileSync("randomnum.txt", res);
+                        });
                 }
 
                 // account balance related
