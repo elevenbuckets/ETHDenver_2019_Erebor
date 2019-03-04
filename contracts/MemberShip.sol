@@ -191,7 +191,7 @@ contract MemberShip {
         return true;
     }
 
-    function renewMembership(uint _tokenId) public payable isMember(_tokenId) isNFTOwner(_tokenId) whenNotPaused returns (uint) {
+    function renewMembership(uint _tokenId) public payable isMember(_tokenId) isNFTOwner(_tokenId) feePaid whenNotPaused returns (uint) {
         require(block.number > memberDB[_tokenId].since + memberPeriod - 10000); // 10000 rinkeby blocks ~1.7 days
         memberDB[_tokenId].since = block.number;
         return block.number;
